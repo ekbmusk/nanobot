@@ -1,0 +1,26 @@
+# Environment
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+*.db
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Wrangler
+.wrangler/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store

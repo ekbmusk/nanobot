@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import 'katex/dist/katex.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100vh;
+  background: #0f0f1a;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(108, 99, 255, 0.35);
+  border-radius: 999px;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl bg-surface border border-border shadow-card;
+  }
+
+  .input {
+    @apply w-full rounded-xl bg-surface-2 border border-border px-3 py-2.5 text-sm text-text-1 outline-none focus:border-primary;
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90;
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-border bg-surface-2 px-4 py-2.5 text-sm font-semibold text-text-1 transition hover:bg-surface-2/80;
+  }
+}
