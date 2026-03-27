@@ -41,6 +41,6 @@ app.include_router(ai.router, prefix="/api/ai", tags=["AI"])
 app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 
 
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 async def health():
     return {"status": "ok", "service": "math-pisa-bot-api"}
