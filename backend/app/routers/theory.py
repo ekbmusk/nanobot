@@ -392,7 +392,7 @@ async def submit_quiz(body: QuizSubmit, db: Session = Depends(get_db)):
         if progress_rec:
             progress_rec.completion_percent = min(100.0, max(progress_rec.completion_percent, percentage))
             progress_rec.problems_solved += total
-            progress_rec.last_updated = now
+            progress_rec.last_updated = datetime.now(timezone.utc)
         else:
             db.add(ProgressModel(
                 user_id=user.id,
