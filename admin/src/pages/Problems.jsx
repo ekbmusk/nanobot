@@ -8,16 +8,16 @@ import LaTeXHelper from '../components/LaTeXHelper'
 import Modal from '../components/Modal'
 
 const PISA_DOMAINS = [
-  { value: 'quantity', label: 'Сан және шама (Quantity)' },
-  { value: 'change_and_relationships', label: 'Өзгерістер мен тәуелділіктер (Change and Relationships)' },
-  { value: 'space_and_shape', label: 'Кеңістік пен пішін (Space and Shape)' },
-  { value: 'uncertainty_and_data', label: 'Анықсыздық пен деректер (Uncertainty and Data)' },
+  { value: 'atomic_structure', label: 'Атом құрылысы (Atomic Structure)' },
+  { value: 'quantum_basics', label: 'Кванттық физика негіздері (Quantum Basics)' },
+  { value: 'nanomaterials', label: 'Наноматериалдар (Nanomaterials)' },
+  { value: 'nano_applications', label: 'Нанотехнология қолданыстары (Nano Applications)' },
 ]
 
 const PISA_LEVELS = [1, 2, 3, 4, 5, 6]
 
 const initialForm = {
-  topic: 'quantity',
+  topic: 'atomic_structure',
   difficulty: '1',
   question: '',
   correct_answer: '',
@@ -51,7 +51,7 @@ export default function Problems() {
       },
       {
         key: 'difficulty',
-        label: 'PISA деңгей',
+        label: 'Деңгей',
         render: (row) => `${row.difficulty}-деңгей`,
       },
       { key: 'question', label: 'Сұрақ', render: (row) => <p className="max-w-lg truncate">{row.question}</p> },
@@ -82,7 +82,7 @@ export default function Problems() {
   const openEdit = (row) => {
     setEditing(row)
     setForm({
-      topic: row.topic || 'quantity',
+      topic: row.topic || 'atomic_structure',
       difficulty: row.difficulty || '1',
       question: row.question || '',
       correct_answer: row.correct_answer || '',
@@ -181,7 +181,7 @@ export default function Problems() {
       <Modal open={openModal} title={editing ? 'Есепті өзгерту' : 'Есеп қосу'} onClose={() => setOpenModal(false)}>
         <form className="grid gap-4 md:grid-cols-2" onSubmit={onSubmit}>
           <div className="space-y-2">
-            <label className="text-sm text-text-2">PISA домені</label>
+            <label className="text-sm text-text-2">Физика тақырыбы</label>
             <select className="input" value={form.topic} onChange={(event) => setForm((prev) => ({ ...prev, topic: event.target.value }))}>
               {PISA_DOMAINS.map((d) => (
                 <option key={d.value} value={d.value}>{d.label}</option>
@@ -190,7 +190,7 @@ export default function Problems() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm text-text-2">PISA деңгей (1-6)</label>
+            <label className="text-sm text-text-2">Деңгей (1-6)</label>
             <div className="flex gap-2">
               {PISA_LEVELS.map((lvl) => (
                 <label key={lvl} className="flex items-center gap-1 text-sm">

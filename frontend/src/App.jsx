@@ -51,8 +51,8 @@ export default function App() {
   useEffect(() => {
     WebApp.ready()
     WebApp.expand()
-    WebApp.setHeaderColor('#0F0F1A')
-    WebApp.setBackgroundColor('#0F0F1A')
+    WebApp.setHeaderColor('#0A0E14')
+    WebApp.setBackgroundColor('#0A0E14')
     const tgUser = WebApp.initDataUnsafe?.user
     if (tgUser) {
       const proxyAvatarUrl = `/api/users/${tgUser.id}/avatar`

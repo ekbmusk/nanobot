@@ -13,7 +13,7 @@ import { adminAPI } from '../api/admin'
 
 const ADMIN_IDS = [876371171, 6433578212]
 
-function StatCard({ icon: Icon, label, value, accent = '#6C63FF' }) {
+function StatCard({ icon: Icon, label, value, accent = '#06B6D4' }) {
   return (
     <div className="bg-surface border border-border rounded-xl p-3 flex items-center gap-3">
       <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: `${accent}20` }}>
@@ -53,10 +53,10 @@ function DashboardView({ stats, onViewUsers }) {
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-2 gap-2">
-        <StatCard icon={Users} label="Пайдаланушылар" value={stats.total_users} accent="#6C63FF" />
-        <StatCard icon={Brain} label="Тесттер тапсырылды" value={stats.total_tests_taken} accent="#43E97B" />
-        <StatCard icon={BookOpen} label="Сұрақтар" value={stats.total_questions} accent="#FFD93D" />
-        <StatCard icon={Target} label="Есептер" value={stats.total_problems} accent="#FF6584" />
+        <StatCard icon={Users} label="Пайдаланушылар" value={stats.total_users} accent="#06B6D4" />
+        <StatCard icon={Brain} label="Тесттер тапсырылды" value={stats.total_tests_taken} accent="#10B981" />
+        <StatCard icon={BookOpen} label="Сұрақтар" value={stats.total_questions} accent="#F59E0B" />
+        <StatCard icon={Target} label="Есептер" value={stats.total_problems} accent="#EF4444" />
       </div>
 
       <div className="bg-surface border border-border rounded-xl p-3">
@@ -355,7 +355,7 @@ function UserDetailView({ userId, onBack }) {
                   className="h-full rounded-full transition-all"
                   style={{
                     width: `${t.accuracy}%`,
-                    background: t.accuracy >= 70 ? '#43E97B' : t.accuracy >= 40 ? '#FFD93D' : '#FF6584',
+                    background: t.accuracy >= 70 ? '#10B981' : t.accuracy >= 40 ? '#F59E0B' : '#EF4444',
                   }}
                 />
               </div>

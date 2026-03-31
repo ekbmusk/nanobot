@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import WebApp from '@twa-dev/sdk'
-import { CheckCircle2, XCircle, ChevronRight, Delete, Target, Sigma, TrendingUp, Shapes, PieChart } from 'lucide-react'
+import { CheckCircle2, XCircle, ChevronRight, Delete, Target, Atom, Orbit, Hexagon, Cpu } from 'lucide-react'
 import TopBar from '../components/TopBar'
 import Card from '../components/Card'
 import Button from '../components/Button'
@@ -10,26 +10,26 @@ import { SkeletonCard } from '../components/SkeletonLoader'
 import { problemsAPI } from '../api/problems'
 
 const LEVELS = [
-  { id: '1', label: '1', color: '#43E97B' },
-  { id: '2', label: '2', color: '#7BE97B' },
-  { id: '3', label: '3', color: '#FFD93D' },
-  { id: '4', label: '4', color: '#FFA63D' },
-  { id: '5', label: '5', color: '#FF6B6B' },
-  { id: '6', label: '6', color: '#D93DFF' },
-  { id: null, label: 'Кездейсоқ', color: '#6C63FF', Icon: Target },
+  { id: '1', label: '1', color: '#10B981' },
+  { id: '2', label: '2', color: '#34D399' },
+  { id: '3', label: '3', color: '#F59E0B' },
+  { id: '4', label: '4', color: '#F97316' },
+  { id: '5', label: '5', color: '#EF4444' },
+  { id: '6', label: '6', color: '#8B5CF6' },
+  { id: null, label: 'Кездейсоқ', color: '#06B6D4', Icon: Target },
 ]
 const TOPICS = [
   { id: null, label: 'Барлығы', Icon: null },
-  { id: 'quantity', label: 'Сан', Icon: Sigma, color: '#6C63FF' },
-  { id: 'change_and_relationships', label: 'Өзгеріс', Icon: TrendingUp, color: '#FF6584' },
-  { id: 'space_and_shape', label: 'Кеңістік', Icon: Shapes, color: '#43E97B' },
-  { id: 'uncertainty_and_data', label: 'Деректер', Icon: PieChart, color: '#FFD93D' },
+  { id: 'atomic_structure', label: 'Атом', Icon: Atom, color: '#06B6D4' },
+  { id: 'quantum_basics', label: 'Кванттық', Icon: Orbit, color: '#10B981' },
+  { id: 'nanomaterials', label: 'Наноматериал', Icon: Hexagon, color: '#38BDF8' },
+  { id: 'nano_applications', label: 'Қолданыс', Icon: Cpu, color: '#F59E0B' },
 ]
 const TOPIC_LABELS = {
-  quantity: 'Сан және шама',
-  change_and_relationships: 'Өзгерістер мен тәуелділіктер',
-  space_and_shape: 'Кеңістік пен пішін',
-  uncertainty_and_data: 'Анықсыздық пен деректер',
+  atomic_structure: 'Атом құрылысы',
+  quantum_basics: 'Кванттық физика негіздері',
+  nanomaterials: 'Наноматериалдар',
+  nano_applications: 'Нанотехнология қолданыстары',
 }
 const NUMPAD = ['7','8','9','4','5','6','1','2','3','.','0','⌫']
 
@@ -202,7 +202,7 @@ export default function Problems() {
               return (
                 <button key={p.id} onClick={() => handleSelect(p, idx)}
                   className="w-full card p-3 text-left pressable"
-                  style={{ borderLeft: `3px solid ${lvl?.color || '#6C63FF'}` }}>
+                  style={{ borderLeft: `3px solid ${lvl?.color || '#06B6D4'}` }}>
                   <div className="text-text-1 text-xs leading-relaxed line-clamp-2 break-word"><FormulaRenderer text={p.question} /></div>
                   <div className="flex items-center justify-between mt-1.5">
                     <span className="text-[10px] text-text-3 truncate">{TOPIC_LABELS[p.topic] || p.topic}</span>

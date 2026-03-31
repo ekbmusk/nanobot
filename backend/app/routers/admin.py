@@ -319,7 +319,7 @@ async def sync_admin_tests_from_bank(
 
         db.add(
             AdminTestQuestion(
-                topic=item.get("topic", "quantity"),
+                topic=item.get("topic", "atomic_structure"),
                 question=question,
                 option_a=options[0],
                 option_b=options[1],

@@ -6,10 +6,10 @@ from app.models.topic_mastery import TopicMastery
 from app.models.user import User
 
 TOPIC_NAMES = {
-    "quantity": "Сан және шама",
-    "change_and_relationships": "Өзгерістер мен тәуелділіктер",
-    "space_and_shape": "Кеңістік пен пішін",
-    "uncertainty_and_data": "Анықсыздық пен деректер",
+    "atomic_structure": "Атом құрылысы",
+    "quantum_basics": "Кванттық физика негіздері",
+    "nanomaterials": "Наноматериалдар",
+    "nano_applications": "Нанотехнология қолданыстары",
 }
 
 

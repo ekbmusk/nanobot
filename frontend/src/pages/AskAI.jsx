@@ -7,10 +7,10 @@ import { aiAPI } from '../api/ai'
 import { useUserStore } from '../store/userStore'
 
 const EXAMPLES = [
-  "Пайыздық есеп қалай шығарамын?",
-  "Функция графигін түсіндір",
-  "Шеңбер ауданы қалай?",
-  "Орташа мән мен медиана",
+  "Атом құрылысын түсіндір",
+  "Де Бройль толқын ұзындығы қалай есептеледі?",
+  "Графен дегеніміз не?",
+  "Наноботтар медицинада қалай қолданылады?",
 ]
 
 const hasFormula = (text) =>
@@ -19,7 +19,7 @@ const hasFormula = (text) =>
 
 export default function AskAI() {
   const { user } = useUserStore()
-  const WELCOME = { role: 'assistant', content: 'Сәлем! Мен математика репетиторымын. Қазақ тілінде жауап беремін. Кез келген математика сұрағыңды жаз!' }
+  const WELCOME = { role: 'assistant', content: 'Сәлем! Мен физика және нанотехнология репетиторымын. Қазақ тілінде жауап беремін. Кез келген физика сұрағыңды жаз!' }
   const [messages, setMessages] = useState([WELCOME])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -111,7 +111,7 @@ export default function AskAI() {
           <div className="flex-1 bg-surface border border-border rounded-xl px-3 py-2.5">
             <input type="text" value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && send()}
-              placeholder="Математика сұрағыңды жаз..."
+              placeholder="Физика сұрағыңды жаз..."
               className="w-full bg-transparent text-text-1 text-xs outline-none placeholder:text-text-3" />
           </div>
           <button onClick={() => send()} disabled={!input.trim() || loading}

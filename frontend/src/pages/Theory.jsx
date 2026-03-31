@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import WebApp from '@twa-dev/sdk'
-import { ChevronRight, BookOpen, Sigma, TrendingUp, Shapes, PieChart, CheckCircle2, XCircle, RotateCcw, Zap } from 'lucide-react'
+import { ChevronRight, BookOpen, Atom, Orbit, Hexagon, Cpu, CheckCircle2, XCircle, RotateCcw, Zap } from 'lucide-react'
 import TopBar from '../components/TopBar'
 import Card from '../components/Card'
 import FormulaRenderer from '../components/FormulaRenderer'
@@ -10,17 +10,17 @@ import { theoryAPI } from '../api/theory'
 import { useUserStore } from '../store/userStore'
 
 const TOPIC_ICONS = {
-  quantity: Sigma,
-  change_and_relationships: TrendingUp,
-  space_and_shape: Shapes,
-  uncertainty_and_data: PieChart,
+  atomic_structure: Atom,
+  quantum_basics: Orbit,
+  nanomaterials: Hexagon,
+  nano_applications: Cpu,
 }
 
 const TOPICS = [
-  { id: 'quantity', label: 'Сан және шама', accent: '#6C63FF', lessons: 10, preview: '\\frac{3}{4} + \\frac{1}{2}' },
-  { id: 'change_and_relationships', label: 'Өзгерістер мен тәуелділіктер', accent: '#FF6584', lessons: 10, preview: 'y = 2x + 3' },
-  { id: 'space_and_shape', label: 'Кеңістік пен пішін', accent: '#43E97B', lessons: 8, preview: 'S = \\pi r^2' },
-  { id: 'uncertainty_and_data', label: 'Анықсыздық пен деректер', accent: '#FFD93D', lessons: 8, preview: '\\bar{x} = \\frac{\\sum x_i}{n}' },
+  { id: 'atomic_structure', label: 'Атом құрылысы', accent: '#06B6D4', lessons: 10, preview: 'E_n = -\\frac{13.6}{n^2}' },
+  { id: 'quantum_basics', label: 'Кванттық физика негіздері', accent: '#10B981', lessons: 10, preview: '\\lambda = \\frac{h}{mv}' },
+  { id: 'nanomaterials', label: 'Наноматериалдар', accent: '#38BDF8', lessons: 8, preview: 'S/V = 6/d' },
+  { id: 'nano_applications', label: 'Нанотехнология қолданыстары', accent: '#F59E0B', lessons: 8, preview: 'E = h\\nu - A' },
 ]
 const TABS = ['Түсіндірме', 'Формулалар', 'Мини-тест']
 
@@ -148,7 +148,7 @@ function MiniQuiz({ topicId, onBack }) {
           </div>
           <h3 className="text-lg font-bold text-text-1 mb-0.5">{passed ? 'Керемет!' : 'Тырысыңыз!'}</h3>
           <p className="text-sm text-text-2 mb-2">{result.correct} / {result.total} дұрыс</p>
-          <div className="text-2xl font-extrabold mb-2" style={{ color: passed ? '#43E97B' : '#FF6584' }}>
+          <div className="text-2xl font-extrabold mb-2" style={{ color: passed ? '#10B981' : '#EF4444' }}>
             {Math.round(result.percentage)}%
           </div>
           {result.xp_earned > 0 && (

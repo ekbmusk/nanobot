@@ -6,14 +6,14 @@ import DataTable from '../components/DataTable'
 import Modal from '../components/Modal'
 
 const PISA_DOMAINS = [
-    { value: 'quantity', label: 'Сан және шама (Quantity)' },
-    { value: 'change_and_relationships', label: 'Өзгерістер мен тәуелділіктер (Change and Relationships)' },
-    { value: 'space_and_shape', label: 'Кеңістік пен пішін (Space and Shape)' },
-    { value: 'uncertainty_and_data', label: 'Анықсыздық пен деректер (Uncertainty and Data)' },
+    { value: 'atomic_structure', label: 'Атом құрылысы (Atomic Structure)' },
+    { value: 'quantum_basics', label: 'Кванттық физика негіздері (Quantum Basics)' },
+    { value: 'nanomaterials', label: 'Наноматериалдар (Nanomaterials)' },
+    { value: 'nano_applications', label: 'Нанотехнология қолданыстары (Nano Applications)' },
 ]
 
 const initialForm = {
-    topic: 'quantity',
+    topic: 'atomic_structure',
     question: '',
     options: ['', '', '', ''],
     correct_option: 'A',
@@ -86,7 +86,7 @@ export default function Tests() {
     const openEdit = (row) => {
         setEditing(row)
         setForm({
-            topic: row.topic || 'quantity',
+            topic: row.topic || 'atomic_structure',
             question: row.question || '',
             options: row.options || ['', '', '', ''],
             correct_option: row.correct_option || 'A',
@@ -163,7 +163,7 @@ export default function Tests() {
     }
 
     const downloadTemplate = () => {
-        const csv = 'topic,question,option_a,option_b,option_c,option_d,correct_answer,explanation\nquantity,2/3 + 1/4 нәтижесі қандай?,11/12,3/7,5/7,8/12,A,Бөлшектерді қосу'
+        const csv = 'topic,question,option_a,option_b,option_c,option_d,correct_answer,explanation\natomic_structure,Электрон құрлымы қандай?,1s2 2s2 2p6,1s2 2s2 2p5,1s2 2s2 2p4,1s2 2s2 2p3,A,Электрон құрлымын саралау'
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
@@ -235,7 +235,7 @@ export default function Tests() {
                 <form className="space-y-4" onSubmit={onSubmit}>
                     <div className="grid gap-3 md:grid-cols-2">
                         <div>
-                            <label className="mb-1.5 block text-sm text-text-2">PISA домені</label>
+                            <label className="mb-1.5 block text-sm text-text-2">Физика тақырыбы</label>
                             <select className="input" value={form.topic} onChange={(event) => setForm((prev) => ({ ...prev, topic: event.target.value }))}>
                                 {PISA_DOMAINS.map((d) => (
                                     <option key={d.value} value={d.value}>{d.label}</option>

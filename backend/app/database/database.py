@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 import os
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./math_pisa_bot.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./physics_nano_bot.db")
 
 engine = create_engine(
     DATABASE_URL,
@@ -79,10 +79,15 @@ def _migrate_sqlite():
 
         # Normalize topic IDs from Kazakh names to English IDs
         topic_renames = {
-            "Сан және шама": "quantity",
-            "Өзгерістер мен тәуелділіктер": "change_and_relationships",
-            "Кеңістік пен пішін": "space_and_shape",
-            "Анықсыздық пен деректер": "uncertainty_and_data",
+            "Атом құрылысы": "atomic_structure",
+            "Кванттық физика негіздері": "quantum_basics",
+            "Наноматериалдар": "nanomaterials",
+            "Нанотехнология қолданыстары": "nano_applications",
+            # Legacy math topics (for migration from old DB)
+            "Сан және шама": "atomic_structure",
+            "Өзгерістер мен тәуелділіктер": "quantum_basics",
+            "Кеңістік пен пішін": "nanomaterials",
+            "Анықсыздық пен деректер": "nano_applications",
         }
         sa = __import__("sqlalchemy")
         for old_name, new_id in topic_renames.items():
@@ -97,7 +102,7 @@ def _migrate_sqlite():
             from app.routers.tests import TEST_BANK
             for item in TEST_BANK:
                 q = item.get("question", "")
-                tid = item.get("topic", "quantity")
+                tid = item.get("topic", "atomic_structure")
                 if q:
                     conn.execute(sa.text("UPDATE admin_test_questions SET topic = :tid WHERE question = :q AND topic != :tid"), {"tid": tid, "q": q})
             conn.commit()
@@ -130,10 +135,10 @@ def _seed_theory_content():
     from app.models.theory_content import TheoryContent
 
     seeds = [
-        {"topic_id": "quantity", "title": "Сан және шама"},
-        {"topic_id": "change_and_relationships", "title": "Өзгерістер мен тәуелділіктер"},
-        {"topic_id": "space_and_shape", "title": "Кеңістік пен пішін"},
-        {"topic_id": "uncertainty_and_data", "title": "Анықсыздық пен деректер"},
+        {"topic_id": "atomic_structure", "title": "Атом құрылысы"},
+        {"topic_id": "quantum_basics", "title": "Кванттық физика негіздері"},
+        {"topic_id": "nanomaterials", "title": "Наноматериалдар"},
+        {"topic_id": "nano_applications", "title": "Нанотехнология қолданыстары"},
     ]
 
     with SessionLocal() as db:

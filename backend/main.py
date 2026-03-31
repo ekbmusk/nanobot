@@ -17,8 +17,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Math PISA Bot API",
-    description="PISA математика боты бэкенд API",
+    title="Physics Nanotechnology Bot API",
+    description="Физика нанотехнология боты бэкенд API",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -43,4 +43,4 @@ app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 
 @app.api_route("/health", methods=["GET", "HEAD"])
 async def health():
-    return {"status": "ok", "service": "math-pisa-bot-api"}
+    return {"status": "ok", "service": "physics-nano-bot-api"}

@@ -9,12 +9,12 @@ import Avatar from './Avatar'
 import client from '../api/client'
 
 const LEVEL_INFO = {
-  '1': { label: 'Бастаушы', color: '#43E97B', next: 'Оқушы' },
-  '2': { label: 'Оқушы', color: '#7BE97B', next: 'Орташа' },
-  '3': { label: 'Орташа', color: '#FFD93D', next: 'Жетік' },
-  '4': { label: 'Жетік', color: '#FFA63D', next: 'Шебер' },
-  '5': { label: 'Шебер', color: '#FF6B6B', next: 'Эксперт' },
-  '6': { label: 'Эксперт', color: '#D93DFF', next: null },
+  '1': { label: 'Бастаушы', color: '#10B981', next: 'Оқушы' },
+  '2': { label: 'Оқушы', color: '#34D399', next: 'Орташа' },
+  '3': { label: 'Орташа', color: '#F59E0B', next: 'Жетік' },
+  '4': { label: 'Жетік', color: '#F97316', next: 'Шебер' },
+  '5': { label: 'Шебер', color: '#EF4444', next: 'Эксперт' },
+  '6': { label: 'Эксперт', color: '#8B5CF6', next: null },
 }
 
 const XP_MILESTONES = [100, 500, 1000, 5000]
@@ -247,7 +247,7 @@ export default function TopBar({ title, showBack, onBack }) {
   return (
     <>
       <div className="flex items-center justify-between px-3 py-2 sticky top-0 z-40"
-        style={{ background: 'rgba(15,15,26,0.9)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        style={{ background: 'rgba(10,14,20,0.9)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(6,182,212,0.06)' }}>
         {showBack ? (
           <button onClick={onBack} className="flex items-center gap-1.5 pressable min-w-0">
             <ArrowLeft size={18} strokeWidth={1.5} className="text-text-2 flex-shrink-0" />
@@ -257,8 +257,8 @@ export default function TopBar({ title, showBack, onBack }) {
           <button onClick={() => setShowProfile(true)} className="flex items-center gap-2 pressable min-w-0">
             <Avatar user={user} size="sm" className="shadow-glow-primary flex-shrink-0" priority />
             <div className="text-left min-w-0">
-              <div className="text-[9px] text-text-2 leading-none">Математика PISA</div>
-              <div className="text-xs font-semibold text-text-1 leading-tight mt-0.5 truncate">{user?.first_name || 'Сәлем!'}</div>
+              <div className="text-[8px] font-mono font-medium text-primary/60 leading-none tracking-wider uppercase">Nano</div>
+              <div className="text-xs font-bold text-text-1 leading-tight mt-0.5 truncate">{user?.first_name || 'Сәлем!'}</div>
             </div>
           </button>
         )}

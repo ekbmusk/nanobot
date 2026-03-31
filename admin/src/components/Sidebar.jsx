@@ -21,7 +21,7 @@ export default function Sidebar() {
     return (
         <aside className="hidden w-64 shrink-0 border-r border-border bg-surface p-4 md:block">
             <div className="mb-6 px-2">
-                <h1 className="text-lg font-bold">Math PISA Admin</h1>
+                <h1 className="text-lg font-bold">Physics Nano Admin</h1>
                 <p className="text-xs text-text-2">Басқару жүйесі</p>
             </div>
 

@@ -50,7 +50,7 @@ export default function Login() {
       >
         <div>
           <h1 className="text-2xl font-bold">Admin кіру</h1>
-          <p className="text-sm text-text-2">Math PISA басқару панелі</p>
+          <p className="text-sm text-text-2">Physics Nano басқару панелі</p>
         </div>
 
         <div>

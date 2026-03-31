@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
 import confetti from 'canvas-confetti'
-import { Trophy, RotateCcw, Home, ChevronRight, Lightbulb, BookOpen, Shuffle, Zap, Sigma, TrendingUp, Shapes, PieChart } from 'lucide-react'
+import { Trophy, RotateCcw, Home, ChevronRight, Lightbulb, BookOpen, Shuffle, Zap, Atom, Orbit, Hexagon, Cpu } from 'lucide-react'
 import TopBar from '../components/TopBar'
 import ProgressBar from '../components/ProgressBar'
 import Button from '../components/Button'
@@ -16,22 +16,22 @@ import { useUserStore } from '../store/userStore'
 const TIMER = 40
 
 const TOPIC_ICONS = {
-  quantity: '🔢',
-  change_and_relationships: '📈',
-  space_and_shape: '📐',
-  uncertainty_and_data: '📊',
+  atomic_structure: '⚛️',
+  quantum_basics: '〰️',
+  nanomaterials: '🔬',
+  nano_applications: '💡',
 }
 
 const TOPIC_LUCIDE_ICONS = {
-  quantity: Sigma,
-  change_and_relationships: TrendingUp,
-  space_and_shape: Shapes,
-  uncertainty_and_data: PieChart,
+  atomic_structure: Atom,
+  quantum_basics: Orbit,
+  nanomaterials: Hexagon,
+  nano_applications: Cpu,
 }
 
 function TimerCircle({ seconds }) {
   const r = 20, c = 2 * Math.PI * r
-  const color = seconds <= 5 ? '#FF6B6B' : seconds <= 10 ? '#FFD93D' : '#43E97B'
+  const color = seconds <= 5 ? '#EF4444' : seconds <= 10 ? '#F59E0B' : '#10B981'
   return (
     <div className="relative w-12 h-12 flex-shrink-0">
       <svg className="w-12 h-12 -rotate-90" viewBox="0 0 48 48">
@@ -111,7 +111,7 @@ function ResultScreen({ score, total, pct, xpEarned, bonusXp, isDaily, onRetry, 
   const [showXP, setShowXP] = useState(xpEarned > 0)
 
   useEffect(() => {
-    if (passed) confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 }, colors: ['#6C63FF', '#43E97B', '#FF6584', '#FFD93D'] })
+    if (passed) confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 }, colors: ['#06B6D4', '#10B981', '#38BDF8', '#F59E0B'] })
   }, [passed])
 
   const r = 50, circ = 2 * Math.PI * r
@@ -139,7 +139,7 @@ function ResultScreen({ score, total, pct, xpEarned, bonusXp, isDaily, onRetry, 
       <div className="relative w-28 h-28 mx-auto mb-6">
         <svg className="w-28 h-28 -rotate-90" viewBox="0 0 120 120">
           <circle cx="60" cy="60" r={r} fill="none" stroke="#1A1A2E" strokeWidth="7" />
-          <circle cx="60" cy="60" r={r} fill="none" stroke={passed ? '#43E97B' : '#FF6584'} strokeWidth="7"
+          <circle cx="60" cy="60" r={r} fill="none" stroke={passed ? '#10B981' : '#EF4444'} strokeWidth="7"
             strokeDasharray={`${circ * (pct / 100)} ${circ}`} strokeLinecap="round"
             style={{ transition: 'stroke-dasharray 1.5s cubic-bezier(0.34,1.56,0.64,1)' }} />
         </svg>
@@ -188,7 +188,7 @@ function TopicSelect({ topics, loading, onSelect }) {
       <TopBar />
       <div className="px-3 pt-3 pb-4">
         <h2 className="text-base font-bold text-text-1 mb-0.5">Тест тақырыбын таңда</h2>
-        <p className="text-xs text-text-3 mb-3">PISA математика домендері</p>
+        <p className="text-xs text-text-3 mb-3">Физика нанотехнология тақырыптары</p>
 
         <button
           onClick={() => onSelect(null)}

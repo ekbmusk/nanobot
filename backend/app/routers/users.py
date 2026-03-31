@@ -24,10 +24,10 @@ router = APIRouter()
 VALID_LEVELS = {"1", "2", "3", "4", "5", "6"}
 
 TOPIC_LABELS = {
-    "quantity": "Сан және шама",
-    "change_and_relationships": "Өзгерістер мен тәуелділіктер",
-    "space_and_shape": "Кеңістік пен пішін",
-    "uncertainty_and_data": "Анықсыздық пен деректер",
+    "atomic_structure": "Атом құрылысы",
+    "quantum_basics": "Кванттық физика негіздері",
+    "nanomaterials": "Наноматериалдар",
+    "nano_applications": "Нанотехнология қолданыстары",
 }
 
 

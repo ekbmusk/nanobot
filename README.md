@@ -1,128 +1,63 @@
-# 📐 Math PISA Bot — Telegram Mini App for PISA Math Preparation
+# ⚛️ Нанотехнология негіздері — Telegram Mini App
 
-Math PISA Bot is a Telegram Mini App designed for school-level math learning based on the PISA assessment model. The user-facing experience is in Kazakh, while the engineering workflow and docs are in English.
+Telegram Mini App для изучения основ нанотехнологий в курсе физики средних школ. Интерфейс на казахском языке, элективный курс: атом құрылысы, кванттық физика, наноматериалдар, қолданыстар.
 
-It combines a React web app, a FastAPI backend, a Telegram bot (aiogram), and AI tutoring through Groq.
-
-## Table of Contents
-
-- [Project Goals](#project-goals)
-- [Tech Stack](#tech-stack)
-- [Core Features](#core-features)
-- [System Architecture](#system-architecture)
-- [Project Structure](#project-structure)
-- [Quick Start](#quick-start)
-- [Environment Variables](#environment-variables)
-- [Run Modes](#run-modes)
-- [Telegram Setup](#telegram-setup)
-- [API Overview](#api-overview)
-- [Admin Panel](#admin-panel)
-- [Development Workflow](#development-workflow)
-- [Troubleshooting](#troubleshooting)
-- [Security Notes](#security-notes)
-- [Roadmap Ideas](#roadmap-ideas)
-- [License](#license)
+Стек: React 18 + Vite + TailwindCSS, FastAPI + SQLAlchemy, aiogram 3, Groq AI (llama-3.3-70b), KaTeX.
 
 ---
 
-## Project Goals
+## Мүмкіндіктер
 
-- Make PISA math content accessible in Kazakh.
-- Provide theory, practice, and testing aligned with PISA math domains.
-- Track learning progress and motivation via streak/rating.
-- Offer AI-assisted explanations with math formulas.
+- ⚛️ Теория — 4 тақырып × 3 подтема × формулалар (LaTeX)
+- 🔬 Есептер — 1-ден 6-ға дейін деңгей, қадам-қадам шешім
+- 🧠 Тесттер — 10 сұрақ, таймер, күнделікті сынақ (+50 XP бонус)
+- 🤖 AI репетитор — қазақ тілінде физика/нанотехнология жауаптары
+- 📊 Прогресс — тақырып бойынша үлгерім, streak, XP жүйесі
+- 🏆 Рейтинг — апта/ай/жалпы кестелер
+- 🏅 Жетістіктер — медальдар мен бейджіктер
+- 🔔 Бот хабарландырулары — streak еске салу, мотивация
 
-## Tech Stack
+## Тех стек
 
-| Layer | Technology |
-|------|------------|
-| Frontend Mini App | React 18, Vite, TailwindCSS |
-| Telegram WebApp SDK | `@twa-dev/sdk` |
-| Backend API | FastAPI, Pydantic |
-| Database | SQLite, SQLAlchemy |
+| Қабат | Технология |
+|-------|-----------|
+| Frontend Mini App | React 18, Vite 5, TailwindCSS 3 |
+| Telegram SDK | `@twa-dev/sdk` |
+| Backend API | FastAPI, SQLAlchemy 2, Pydantic 2 |
+| Database | SQLite (PostgreSQL-compatible) |
 | Telegram Bot | aiogram 3 |
-| AI Integration | Groq (llama-3.3-70b) |
-| Formula Rendering | KaTeX |
-| Deployment | Docker Compose |
+| AI | Groq (llama-3.3-70b) |
+| Формулалар | KaTeX |
+| Deploy | Docker Compose, Cloudflare Pages, Render, Railway |
 
-## Core Features
+## Тақырыптар
 
-- 📘 Theory topics by PISA math domain (Quantity, Change & Relationships, Space & Shape, Uncertainty & Data).
-- 🧮 Problems by PISA competency level (1–6).
-- 🧠 Randomized tests with instant scoring.
-- 📊 Progress tracking (scores, solved tasks, streak).
-- 🏆 Leaderboard/rating views.
-- ❓ AI tutor chat in Kazakh with LaTeX-friendly output.
-- 🔔 Bot-side engagement utilities (commands, reminders/notifications).
+| ID | Тақырып (каз.) | Сипаттама |
+|----|----------------|-----------|
+| `atomic_structure` | Атом құрылысы | Бор моделі, де Бройль, Гейзенберг |
+| `quantum_basics` | Кванттық физика негіздері | Шрёдингер, фотоэффект, туннельдік эффект |
+| `nanomaterials` | Наноматериалдар | Фуллерен, графен, нанотүтіктер, S/V қатынасы |
+| `nano_applications` | Нанотехнология қолданыстары | Наноботтар, кванттық нүктелер, күн батареялары |
 
-## System Architecture
+## Жүргізу
 
-End-to-end flow:
-
-1. User opens Telegram bot and launches Mini App.
-2. Frontend reads Telegram WebApp context and calls backend APIs.
-3. Backend validates requests, reads/writes database, and returns content/results.
-4. AI requests are proxied through backend service (API key stays server-side).
-5. Bot handlers provide command UX and messaging outside Mini App screens.
-
-## Project Structure
-
-```text
-math-pisa-bot/
-├── frontend/            # Telegram Mini App (React)
-├── backend/             # FastAPI application
-│   └── app/
-│       ├── routers/     # API route modules
-│       ├── models/      # SQLAlchemy models
-│       ├── schemas/     # Pydantic schemas
-│       ├── services/    # AI/progress/business logic
-│       └── database/    # DB engine/session/init
-├── bot/                 # aiogram bot
-│   ├── handlers/        # Command/message handlers
-│   └── keyboards/       # Reply/inline keyboards
-├── admin/               # Admin web interface
-└── docker-compose.yml   # Multi-service local/prod orchestration
-```
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-- Python 3.11+
-- Telegram bot token from [@BotFather](https://t.me/BotFather)
-
-### 1) Configure environment
-
-```bash
-cp .env.example .env
-```
-
-Fill required variables in `.env` (see [Environment Variables](#environment-variables)).
-
-### 2) Start backend
+### Backend (API docs: localhost:8000/docs)
 
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate    # Windows: .venv\Scripts\activate
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-Open docs at `http://localhost:8000/docs`.
-
-### 3) Start frontend
+### Frontend (Vite dev server :3000)
 
 ```bash
 cd frontend
-npm install
-npm run dev
+npm install && npm run dev
 ```
 
-Default local URL is usually `http://localhost:5173` (or as configured by Vite).
-
-### 4) Start bot
+### Bot
 
 ```bash
 cd bot
@@ -130,160 +65,64 @@ pip install -r requirements.txt
 python main.py
 ```
 
-### 5) (Optional) Start admin panel
+### Admin panel (:5174)
 
 ```bash
 cd admin
-npm install
-npm run dev
+npm install && npm run dev
 ```
 
-## Environment Variables
-
-Typical values used across services:
-
-```env
-# Telegram
-BOT_TOKEN=
-TELEGRAM_BOT_TOKEN=
-MINI_APP_URL=https://your-public-miniapp-url
-
-# AI (Groq)
-GROQ_API_KEY=
-
-# Backend
-BACKEND_URL=http://localhost:8000
-DATABASE_URL=sqlite:///./math_pisa_bot.db
-
-# Admin auth
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=change_me
-JWT_SECRET_KEY=change_me_super_secret
-```
-
-## Run Modes
-
-### A) Local multi-terminal development
-
-- Terminal 1: backend
-- Terminal 2: frontend
-- Terminal 3: bot
-- Terminal 4: admin (optional)
-
-### B) Docker Compose
+### Docker (барлық сервистер)
 
 ```bash
 docker-compose up --build
 ```
 
-Typical service endpoints:
+## Ортаның айнымалылары (.env)
 
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:8000`
-- API docs: `http://localhost:8000/docs`
-
-## Telegram Setup
-
-1. Open [@BotFather](https://t.me/BotFather)
-2. Create or select your bot
-3. Set Mini App menu button URL with `/setmenubutton`
-4. Add domain allowlist using `/setdomain`
-
-Mini App URL must be HTTPS. For local testing, use a tunnel:
-
-```bash
-ngrok http 5173
+```env
+BOT_TOKEN=
+TELEGRAM_BOT_TOKEN=
+MINI_APP_URL=https://your-miniapp-url
+GROQ_API_KEY=
+BACKEND_URL=http://localhost:8000
+DATABASE_URL=sqlite:///./physics_nanotechnology_bot.db
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=change_me
+JWT_SECRET_KEY=change_me_super_secret
+ADMIN_TELEGRAM_IDS=123456789
+VITE_API_URL=/api
 ```
 
-Set the generated HTTPS URL as `MINI_APP_URL` and in BotFather settings.
+## API негізгі endpoint-тары
 
-## API Overview
+| Метод | Endpoint | Мақсат |
+|-------|----------|--------|
+| GET | `/api/theory/topics` | 4 физика тақырыбы |
+| GET | `/api/theory/topics/{id}` | Тақырып контенті |
+| GET | `/api/problems` | Есептер (difficulty, topic фильтрі) |
+| POST | `/api/problems/{id}/check` | Жауап тексеру |
+| GET | `/api/tests/random` | Кездейсоқ тест |
+| POST | `/api/tests/submit` | Тест нәтижесін сақтау |
+| GET | `/api/progress/{telegram_id}` | Оқушы прогресі |
+| GET | `/api/rating/leaderboard` | Рейтинг кестесі |
+| POST | `/api/ai/ask` | AI репетиторға сұрақ |
 
-Main route groups in backend:
+## Проблемалар шешу
 
-- `/theory` — PISA math domain topics/content
-- `/problems` — filtering by domain and level, answer checks
-- `/tests` — random test generation, submit result
-- `/progress` — user learning stats updates
-- `/rating` — leaderboard/top users
-- `/ai` — AI tutoring endpoint
-- `/admin` — protected admin operations
+| Мәселе | Шешім |
+|--------|-------|
+| Бот жауап бермейді | `BOT_TOKEN` тексеру, бір ғана polling процесс |
+| Mini App ашылмайды | `MINI_APP_URL` HTTPS болуы керек |
+| AI қатесі | `GROQ_API_KEY` тексеру |
+| CORS қатесі | Backend CORS origin-ды жаңарту |
 
-Example endpoints used by the app:
+## Деплой
 
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| GET | `/api/theory/topics` | Get PISA math domain list |
-| GET | `/api/theory/topics/{id}` | Get domain content |
-| GET | `/api/problems` | Get problems with filters |
-| POST | `/api/problems/{id}/check` | Validate answer |
-| GET | `/api/tests/random` | Fetch random quiz |
-| POST | `/api/tests/submit` | Save test result |
-| GET | `/api/progress/{telegram_id}` | Get user progress |
-| GET | `/api/rating/leaderboard` | Get ranking table |
-| POST | `/api/ai/ask` | Ask AI tutor |
+- **Frontend** — Cloudflare Pages (`npm run pages:deploy`) немесе Vercel
+- **Backend** — Render (render.yaml конфигурациясы бар)
+- **Bot** — Railway (railway.json конфигурациясы бар)
 
-## Admin Panel
-
-The admin app is intended for content and operations management:
-
-- Manage theory content blocks by PISA domain
-- Manage problems/tests with PISA levels 1–6
-- Review users and progress summaries
-- Send notifications/broadcasts
-
-Recommended: run admin behind authentication and only over trusted networks in development.
-
-## Development Workflow
-
-1. Add or update content/models in backend.
-2. Expose/adjust API schema and router.
-3. Integrate/update frontend page and API client.
-4. Validate Telegram bot entry points/commands.
-5. Verify formula rendering and language consistency.
-
-## Troubleshooting
-
-### Bot does not respond
-
-- Verify `BOT_TOKEN` is valid.
-- Ensure only one bot process is polling updates.
-
-### Mini App opens blank page
-
-- Check `MINI_APP_URL` points to active HTTPS frontend.
-- Inspect browser devtools console for runtime errors.
-
-### AI request fails
-
-- Verify `GROQ_API_KEY` and account access.
-- Check backend logs for upstream API errors/timeouts.
-
-### CORS errors
-
-- Update backend CORS configuration to include frontend origin.
-
-### Telegram WebApp user is missing in local browser
-
-- `initDataUnsafe` is empty outside Telegram context; this is expected.
-- Use fallback/mock flows for browser-only UI testing.
-
-## Security Notes
-
-- Do not commit `.env` with real credentials.
-- Rotate tokens/keys if they were exposed.
-- Replace default admin credentials before any deployment.
-- Restrict CORS origins in production.
-- Keep API keys server-side only (never expose in frontend bundle).
-
-## Roadmap Ideas
-
-- Adaptive difficulty based on PISA competency level performance
-- Richer analytics dashboard and achievements
-- Content localization tooling for educators
-- Scheduled weekly challenge tests
-- PISA-style real-world context problems
-
-## License
+## Лицензия
 
 MIT

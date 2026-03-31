@@ -126,14 +126,14 @@ async def cmd_start(message: Message):
 
     if is_new or not stats:
         text = (
-            f"📐 <b>Математика PISA Боты</b>\n"
+            f"⚛️ <b>Физика Нанотехнология Боты</b>\n"
             f"━━━━━━━━━━━━━━━━━\n\n"
             f"Сәлем, <b>{first_name}</b>! 👋\n\n"
-            f"Бұл бот PISA математикасын оңай үйренуге көмектеседі:\n\n"
-            f"📘 <b>Теория</b> — 4 PISA домені, формулалар\n"
+            f"Бұл бот физика және нанотехнологияны оңай үйренуге көмектеседі:\n\n"
+            f"📘 <b>Теория</b> — нанотехнология негіздері\n"
             f"🧮 <b>Есептер</b> — 6 деңгей: жеңіл → күрделі\n"
             f"🧠 <b>Тесттер</b> — 10 сұрақ, таймермен\n"
-            f"🤖 <b>AI репетитор</b> — кез келген сұраққа жауап\n"
+            f"🤖 <b>AI репетитор</b> — физика сұрағына жауап\n"
             f"🏆 <b>Рейтинг</b> — достарыңмен бәсекелес\n"
             f"🔥 <b>Streak</b> — күн сайын оқы, жолақ жина\n\n"
             f"━━━━━━━━━━━━━━━━━\n"
@@ -142,7 +142,7 @@ async def cmd_start(message: Message):
     else:
         rank_str = f"#{stats['rank']}" if stats.get("rank") else "—"
         text = (
-            f"📐 <b>Математика PISA Боты</b>\n"
+            f"⚛️ <b>Физика Нанотехнология Боты</b>\n"
             f"━━━━━━━━━━━━━━━━━\n\n"
             f"Қош келдіңіз қайта, <b>{first_name}</b>! 🎉\n\n"
             f"📊 <b>Сіздің статистика:</b>\n"
@@ -157,7 +157,7 @@ async def cmd_start(message: Message):
 
     # Send persistent reply keyboard
     await message.answer(
-        "📐 <b>Математика PISA</b> — Мәзір дайын!",
+        "⚛️ <b>Физика Нанотехнология</b> — Мәзір дайын!",
         parse_mode="HTML",
         reply_markup=get_main_keyboard(),
     )
@@ -182,7 +182,7 @@ async def cmd_start(message: Message):
 async def cmd_app(message: Message):
     if MINI_APP_URL:
         await message.answer(
-            "📐 <b>Математика PISA</b> — Mini App:",
+            "⚛️ <b>Физика Нанотехнология</b> — Mini App:",
             parse_mode="HTML",
             reply_markup=open_app_button(),
         )

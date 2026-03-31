@@ -71,7 +71,7 @@ export default function Rating() {
         </div>
 
         {myRank && (
-          <div className="card p-3 mb-3" style={{ borderLeft: '3px solid #6C63FF' }}>
+          <div className="card p-3 mb-3" style={{ borderLeft: '3px solid #06B6D4' }}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">
                 <Medal size={18} strokeWidth={1.5} className="text-primary flex-shrink-0" />

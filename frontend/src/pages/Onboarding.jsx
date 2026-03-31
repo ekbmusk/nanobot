@@ -1,30 +1,30 @@
 import { useState, useRef } from 'react'
 import WebApp from '@twa-dev/sdk'
 import {
-  BookOpen, Brain, Bot, Calculator, Trophy,
+  BookOpen, Brain, Bot, FlaskConical, Trophy,
   CheckCircle2, Flame, Star, Zap, MessageCircle,
-  BarChart2, ChevronRight, Sparkles, Sigma,
+  BarChart2, ChevronRight, Sparkles, Atom,
 } from 'lucide-react'
 import { useUserStore } from '../store/userStore'
 import Button from '../components/Button'
 
 const LEVELS = [
-  { id: '1', emoji: '1️⃣', title: 'PISA 1-деңгей', desc: 'Қарапайым есептер',     sub: 'Негізгі амалдар',        color: '#43E97B' },
-  { id: '2', emoji: '2️⃣', title: 'PISA 2-деңгей', desc: 'Тәуелділіктерді білемін', sub: 'Формулалар мен сызбалар', color: '#7BE97B' },
-  { id: '3', emoji: '3️⃣', title: 'PISA 3-деңгей', desc: 'Бірнеше қадамды есеп',   sub: 'Орташа деңгей',          color: '#FFD93D' },
-  { id: '4', emoji: '4️⃣', title: 'PISA 4-деңгей', desc: 'Модельдеу мен талдау',    sub: 'Күрделі контекст',       color: '#FFA63D' },
-  { id: '5', emoji: '5️⃣', title: 'PISA 5-деңгей', desc: 'Күрделі модельдер',       sub: 'Стратегиялық ойлау',      color: '#FF6584' },
-  { id: '6', emoji: '6️⃣', title: 'PISA 6-деңгей', desc: 'Жоғары деңгей талдау',    sub: 'Математикалық дәлелдеу',  color: '#D93DFF' },
+  { id: '1', emoji: '1️⃣', title: '1-деңгей', desc: 'Негізгі түсініктер',     sub: 'Нанотехнология негіздері',       color: '#10B981' },
+  { id: '2', emoji: '2️⃣', title: '2-деңгей', desc: 'Қарапайым есептеулер',   sub: 'Атом өлшемі, масштаб',           color: '#34D399' },
+  { id: '3', emoji: '3️⃣', title: '3-деңгей', desc: 'Құрылым талдау',          sub: 'Молекулалық құрылым',            color: '#F59E0B' },
+  { id: '4', emoji: '4️⃣', title: '4-деңгей', desc: 'Қасиеттерді болжау',     sub: 'Наноматериал қасиеттері',        color: '#F97316' },
+  { id: '5', emoji: '5️⃣', title: '5-деңгей', desc: 'Синтез және модельдеу',   sub: 'Нанопроцестер модельдеу',        color: '#EF4444' },
+  { id: '6', emoji: '6️⃣', title: '6-деңгей', desc: 'Зерттеу деңгейі',        sub: 'Кванттық есептеулер',            color: '#8B5CF6' },
 ]
 
 const FEATURES = [
-  { Icon: BookOpen,       title: 'Теория',           tag: 'Оқу',          desc: '4 PISA домені — формулалар мен түсіндірмелер қазақша.',       color: '#6C63FF', bg: 'rgba(108,99,255,0.12)' },
-  { Icon: Calculator,     title: 'Есептер',          tag: 'Тәжірибе',     desc: 'PISA 1-ден 6-ға дейін. Шешімді қадам-қадам тексер.',          color: '#FF6584', bg: 'rgba(255,101,132,0.12)' },
-  { Icon: Brain,          title: 'Тест',             tag: 'Тексеру',      desc: '10 сұрақтан тұратын тест. Таймер бар.',                        color: '#43E97B', bg: 'rgba(67,233,123,0.12)' },
-  { Icon: Flame,          title: 'Күнделікті сынақ', tag: 'Бонус',        desc: 'Күн сайын жаңа тест — +50 бонус XP!',                         color: '#FFD93D', bg: 'rgba(255,211,61,0.12)' },
-  { Icon: MessageCircle,  title: 'AI Репетитор',     tag: 'AI',           desc: 'Математика сұрағын жаз — AI қазақша жауап береді.',            color: '#38BDF8', bg: 'rgba(56,189,248,0.12)' },
-  { Icon: Trophy,         title: 'Рейтинг',          tag: 'Жарыс',        desc: 'XP жинап алдыңғы қатарға шық!',                               color: '#FB923C', bg: 'rgba(251,146,60,0.12)' },
-  { Icon: BarChart2,      title: 'Прогресс',         tag: 'Статистика',   desc: 'Тақырыптар бойынша үлгерім, streak және нәтижелер.',           color: '#A78BFA', bg: 'rgba(167,139,250,0.12)' },
+  { Icon: BookOpen,       title: 'Теория',           tag: 'Оқу',          desc: '4 тақырып — атом құрылысы, кванттық физика, наноматериалдар, қолданыстар.',  color: '#06B6D4', bg: 'rgba(6,182,212,0.12)' },
+  { Icon: FlaskConical,   title: 'Есептер',          tag: 'Тәжірибе',     desc: '1-ден 6-ға дейін деңгей. Шешімді қадам-қадам тексер.',                       color: '#10B981', bg: 'rgba(16,185,129,0.12)' },
+  { Icon: Brain,          title: 'Тест',             tag: 'Тексеру',      desc: '10 сұрақтан тұратын тест. Таймер бар.',                                      color: '#38BDF8', bg: 'rgba(56,189,248,0.12)' },
+  { Icon: Flame,          title: 'Күнделікті сынақ', tag: 'Бонус',        desc: 'Күн сайын жаңа тест — +50 бонус XP!',                                       color: '#F59E0B', bg: 'rgba(245,158,11,0.12)' },
+  { Icon: MessageCircle,  title: 'AI Репетитор',     tag: 'AI',           desc: 'Физика сұрағын жаз — AI қазақша жауап береді.',                              color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)' },
+  { Icon: Trophy,         title: 'Рейтинг',          tag: 'Жарыс',        desc: 'XP жинап алдыңғы қатарға шық!',                                              color: '#EF4444', bg: 'rgba(239,68,68,0.12)' },
+  { Icon: BarChart2,      title: 'Прогресс',         tag: 'Статистика',   desc: 'Тақырыптар бойынша үлгерім, streak және нәтижелер.',                          color: '#A78BFA', bg: 'rgba(167,139,250,0.12)' },
 ]
 
 function Dots({ total, current, onClick }) {
@@ -55,31 +55,31 @@ function Screen0({ onNext, onSkip }) {
           <div className="absolute inset-0 rounded-full bg-primary/10 blur-2xl" />
           <div className="absolute inset-0 rounded-full border border-primary/20 animate-spin" style={{ animationDuration: '10s' }} />
           <div className="absolute inset-5 rounded-full border border-secondary/20 animate-spin" style={{ animationDuration: '6s', animationDirection: 'reverse' }} />
-          <div className="absolute inset-10 rounded-full border border-success/20 animate-spin" style={{ animationDuration: '4s' }} />
+          <div className="absolute inset-10 rounded-full border border-info/20 animate-spin" style={{ animationDuration: '4s' }} />
           {[0, 1, 2].map(i => (
             <div key={i} className="absolute inset-0 flex items-start justify-center"
               style={{ transform: `rotate(${i * 120}deg)` }}>
               <div className="w-2.5 h-2.5 rounded-full mt-0.5 shadow-glow-primary"
-                style={{ background: ['#6C63FF','#FF6584','#43E97B'][i], boxShadow: `0 0 8px ${['#6C63FF','#FF6584','#43E97B'][i]}` }} />
+                style={{ background: ['#06B6D4','#10B981','#38BDF8'][i], boxShadow: `0 0 8px ${['#06B6D4','#10B981','#38BDF8'][i]}` }} />
             </div>
           ))}
-          <Sigma size={44} strokeWidth={1.2} className="z-10 text-primary drop-shadow-[0_0_12px_rgba(108,99,255,0.7)]" />
+          <Atom size={44} strokeWidth={1.2} className="z-10 text-primary drop-shadow-[0_0_12px_rgba(6,182,212,0.7)]" />
         </div>
 
         <div className="flex items-center gap-1.5 mb-2">
           <Sparkles size={14} strokeWidth={1.5} className="text-primary" />
-          <span className="text-[10px] font-semibold text-primary uppercase tracking-widest">Math PISA Bot</span>
+          <span className="text-[10px] font-semibold text-primary uppercase tracking-widest">Нанотехнология</span>
         </div>
         <h1 className="text-2xl font-extrabold text-text-1 text-center mb-2 leading-tight">
-          Математиканы<br />оңай үйрен!
+          Нанодүниені<br />зерттейік!
         </h1>
         <p className="text-xs text-text-2 text-center leading-relaxed mb-6 max-w-[280px]">
-          PISA деңгейіндегі теория, есептер, тесттер және AI репетитор — барлығы қазақ тілінде
+          Атом құрылысы, кванттық физика, наноматериалдар және қолданыстар — барлығы қазақ тілінде
         </p>
 
         <div className="flex flex-wrap justify-center gap-1.5 mb-6">
           {[
-            { icon: '📐', text: '4 PISA домен' },
+            { icon: '⚛️', text: '4 тақырып' },
             { icon: '🧠', text: 'AI репетитор' },
             { icon: '🏆', text: 'Рейтинг' },
             { icon: '🔥', text: 'Streak' },
@@ -152,7 +152,7 @@ function Screen1({ onNext, onSkip }) {
         <button
           onClick={onNext}
           className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-[11px] font-bold text-white pressable"
-          style={{ background: 'rgba(108,99,255,0.85)' }}
+          style={{ background: 'rgba(6,182,212,0.85)' }}
         >
           Келесі <ChevronRight size={12} strokeWidth={2.5} />
         </button>
@@ -170,7 +170,7 @@ function Screen2({ selectedLevel, onSelect, onStart }) {
           <Star size={14} strokeWidth={1.5} className="text-warning" />
           <span className="text-[10px] font-semibold text-warning uppercase tracking-widest">Соңғы қадам</span>
         </div>
-        <h1 className="text-xl font-extrabold text-text-1 mb-0.5">PISA деңгейіңді таңда</h1>
+        <h1 className="text-xl font-extrabold text-text-1 mb-0.5">Деңгейіңді таңда</h1>
         <p className="text-xs text-text-2">Есептер қиындығы осыған байланысты</p>
       </div>
 

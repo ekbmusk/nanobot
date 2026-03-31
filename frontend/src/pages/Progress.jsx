@@ -14,12 +14,12 @@ import { useUserStore } from '../store/userStore'
 import client from '../api/client'
 
 const LEVEL_LABELS = {
-  '1': { label: 'Бастаушы', color: '#43E97B' },
-  '2': { label: 'Оқушы', color: '#7BE97B' },
-  '3': { label: 'Орташа', color: '#FFD93D' },
-  '4': { label: 'Жетік', color: '#FFA63D' },
-  '5': { label: 'Шебер', color: '#FF6B6B' },
-  '6': { label: 'Эксперт', color: '#D93DFF' },
+  '1': { label: 'Бастаушы', color: '#10B981' },
+  '2': { label: 'Оқушы', color: '#34D399' },
+  '3': { label: 'Орташа', color: '#F59E0B' },
+  '4': { label: 'Жетік', color: '#F97316' },
+  '5': { label: 'Шебер', color: '#EF4444' },
+  '6': { label: 'Эксперт', color: '#8B5CF6' },
 }
 
 export default function Progress() {
@@ -78,7 +78,7 @@ export default function Progress() {
 
         {/* Profile header */}
         <div className="relative rounded-2xl overflow-hidden border border-primary/20 p-4"
-          style={{ background: 'linear-gradient(135deg, rgba(108,99,255,0.12) 0%, #1A1A2E 60%, #0F0F1A 100%)' }}>
+          style={{ background: 'linear-gradient(135deg, rgba(6,182,212,0.12) 0%, #111B2E 60%, #0A0E14 100%)' }}>
           <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-primary/15 blur-2xl" />
           <div className="flex items-center gap-3">
             <Avatar user={user} size="xl" />

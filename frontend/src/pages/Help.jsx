@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import WebApp from '@twa-dev/sdk'
-import { BookOpen, Calculator, Brain, BarChart2, MessageCircle, Trophy, Lightbulb } from 'lucide-react'
+import { BookOpen, FlaskConical, Brain, BarChart2, MessageCircle, Trophy, Lightbulb } from 'lucide-react'
 import TopBar from '../components/TopBar'
 
 const SECTIONS = [
-  { Icon: BookOpen, title: 'Теория', color: '#6C63FF', desc: '4 PISA домені: сан және шама, өзгерістер мен тәуелділіктер, кеңістік пен пішін, анықсыздық пен деректер.' },
-  { Icon: Calculator, title: 'Есептер', color: '#FF6584', desc: 'PISA деңгейлері: 1-ден 6-ға дейін. Жауапты цифрлық пернетақтамен енгіз.' },
-  { Icon: Brain, title: 'Тест', color: '#43E97B', desc: '10 сұрақтан тұратын тест. Таймер — 20 секунд.' },
-  { Icon: BarChart2, title: 'Прогресс', color: '#38BDF8', desc: 'Тақырыптар бойынша үлгерімді бақыла.' },
-  { Icon: MessageCircle, title: 'AI Репетитор', color: '#FFD93D', desc: 'Математика жауаптары қазақ тілінде, формулалар LaTeX форматында.' },
-  { Icon: Trophy, title: 'Рейтинг', color: '#FF8FA3', desc: 'Апта/ай/жалпы кестелер. Тест тапсырған сайын ұпай жиналады.' },
+  { Icon: BookOpen, title: 'Теория', color: '#06B6D4', desc: '4 тақырып: атом құрылысы, кванттық физика негіздері, наноматериалдар, нанотехнология қолданыстары.' },
+  { Icon: FlaskConical, title: 'Есептер', color: '#10B981', desc: 'Деңгейлер: 1-ден 6-ға дейін. Жауапты цифрлық пернетақтамен енгіз.' },
+  { Icon: Brain, title: 'Тест', color: '#38BDF8', desc: '10 сұрақтан тұратын тест. Таймер — 40 секунд.' },
+  { Icon: BarChart2, title: 'Прогресс', color: '#8B5CF6', desc: 'Тақырыптар бойынша үлгерімді бақыла.' },
+  { Icon: MessageCircle, title: 'AI Репетитор', color: '#F59E0B', desc: 'Физика жауаптары қазақ тілінде, формулалар LaTeX форматында.' },
+  { Icon: Trophy, title: 'Рейтинг', color: '#EF4444', desc: 'Апта/ай/жалпы кестелер. Тест тапсырған сайын ұпай жиналады.' },
 ]
 
 export default function Help() {
@@ -48,7 +48,7 @@ export default function Help() {
             Күн сайын кем дегенде 1 тест тапсыр — ұпайың өседі!
           </p>
         </div>
-        <div className="mt-4 text-center text-[10px] text-text-3">Math PISA Bot v2.0 · Қазақстан</div>
+        <div className="mt-4 text-center text-[10px] text-text-3">Нанотехнология негіздері v1.0 · Қазақстан</div>
       </div>
     </div>
   )

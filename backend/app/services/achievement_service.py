@@ -104,7 +104,7 @@ def check_and_award(db: Session, user: User) -> list[dict]:
             qid = a.get("question_id")
             if qid:
                 q = db.query(AdminTestQuestion).filter(AdminTestQuestion.id == qid).first()
-                if q and q.topic in ("quantity", "change_and_relationships", "space_and_shape", "uncertainty_and_data"):
+                if q and q.topic in ("atomic_structure", "quantum_basics", "nanomaterials", "nano_applications"):
                     topics_attempted.add(q.topic)
     if len(topics_attempted) >= 4:
         _award(db, user.id, "all_topics", newly)
