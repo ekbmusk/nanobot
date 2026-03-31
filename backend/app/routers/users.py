@@ -21,7 +21,7 @@ from app.utils.auth import get_admin_by_telegram_id
 
 router = APIRouter()
 
-VALID_LEVELS = {"1", "2", "3", "4", "5", "6"}
+VALID_LEVELS = {"1", "2", "3"}
 
 TOPIC_LABELS = {
     "atomic_structure": "Атом құрылысы",

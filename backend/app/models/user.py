@@ -17,7 +17,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     score = Column(Integer, default=0)
     streak = Column(Integer, default=0)
-    level = Column(String, default="3")
+    level = Column(String, default="1")
     is_admin = Column(Boolean, default=False)
     is_banned = Column(Boolean, default=False)
     notifications_enabled = Column(Boolean, default=True)

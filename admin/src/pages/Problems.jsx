@@ -14,7 +14,7 @@ const PISA_DOMAINS = [
   { value: 'nano_applications', label: 'Нанотехнология қолданыстары (Nano Applications)' },
 ]
 
-const PISA_LEVELS = [1, 2, 3, 4, 5, 6]
+const PISA_LEVELS = [1, 2, 3]
 
 const initialForm = {
   topic: 'atomic_structure',

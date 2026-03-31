@@ -9,12 +9,9 @@ import Avatar from './Avatar'
 import client from '../api/client'
 
 const LEVEL_INFO = {
-  '1': { label: 'Бастаушы', color: '#10B981', next: 'Оқушы' },
-  '2': { label: 'Оқушы', color: '#34D399', next: 'Орташа' },
-  '3': { label: 'Орташа', color: '#F59E0B', next: 'Жетік' },
-  '4': { label: 'Жетік', color: '#F97316', next: 'Шебер' },
-  '5': { label: 'Шебер', color: '#EF4444', next: 'Эксперт' },
-  '6': { label: 'Эксперт', color: '#8B5CF6', next: null },
+  '1': { label: 'Негізгі', color: '#10B981', next: 'Орташа' },
+  '2': { label: 'Орташа', color: '#F59E0B', next: 'Күрделі' },
+  '3': { label: 'Күрделі', color: '#EF4444', next: null },
 }
 
 const XP_MILESTONES = [100, 500, 1000, 5000]

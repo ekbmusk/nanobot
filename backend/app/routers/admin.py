@@ -235,7 +235,7 @@ async def bulk_import_problems(
     errors = []
     for index, row in enumerate(reader, start=2):
         try:
-            if row.get("difficulty") not in {"1", "2", "3", "4", "5", "6"}:
+            if row.get("difficulty") not in {"1", "2", "3"}:
                 raise ValueError("Деңгей жарамсыз")
 
             problem = Problem(

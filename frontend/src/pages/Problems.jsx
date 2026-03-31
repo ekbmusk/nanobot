@@ -10,12 +10,9 @@ import { SkeletonCard } from '../components/SkeletonLoader'
 import { problemsAPI } from '../api/problems'
 
 const LEVELS = [
-  { id: '1', label: '1', color: '#10B981' },
-  { id: '2', label: '2', color: '#34D399' },
-  { id: '3', label: '3', color: '#F59E0B' },
-  { id: '4', label: '4', color: '#F97316' },
-  { id: '5', label: '5', color: '#EF4444' },
-  { id: '6', label: '6', color: '#8B5CF6' },
+  { id: '1', label: 'Негізгі', color: '#10B981' },
+  { id: '2', label: 'Орташа', color: '#F59E0B' },
+  { id: '3', label: 'Күрделі', color: '#EF4444' },
   { id: null, label: 'Кездейсоқ', color: '#06B6D4', Icon: Target },
 ]
 const TOPICS = [

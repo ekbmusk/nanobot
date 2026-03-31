@@ -14,12 +14,9 @@ import { useUserStore } from '../store/userStore'
 import client from '../api/client'
 
 const LEVEL_LABELS = {
-  '1': { label: 'Бастаушы', color: '#10B981' },
-  '2': { label: 'Оқушы', color: '#34D399' },
-  '3': { label: 'Орташа', color: '#F59E0B' },
-  '4': { label: 'Жетік', color: '#F97316' },
-  '5': { label: 'Шебер', color: '#EF4444' },
-  '6': { label: 'Эксперт', color: '#8B5CF6' },
+  '1': { label: 'Негізгі', color: '#10B981' },
+  '2': { label: 'Орташа', color: '#F59E0B' },
+  '3': { label: 'Күрделі', color: '#EF4444' },
 }
 
 export default function Progress() {
@@ -301,7 +298,7 @@ export default function Progress() {
                           {hasMastery && t.attempts >= 3 && (
                             <div className="flex items-center justify-between mt-1.5">
                               <span className="text-[9px] text-text-3">Соңғы 5: {Math.round(t.last_5_accuracy)}%</span>
-                              <span className="text-[9px] text-text-3">Деңгей: {t.estimated_level}/6</span>
+                              <span className="text-[9px] text-text-3">Деңгей: {Math.min(t.estimated_level, 3)}/3</span>
                             </div>
                           )}
                         </div>
