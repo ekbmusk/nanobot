@@ -42,7 +42,7 @@ def _format_user_mention(entry: dict) -> str:
 def _start_inline_keyboard() -> InlineKeyboardMarkup:
     buttons = []
     if MINI_APP_URL:
-        buttons.append([InlineKeyboardButton(text="📐 Қосымшаны ашу", web_app=WebAppInfo(url=MINI_APP_URL))])
+        buttons.append([InlineKeyboardButton(text="⚛️ Қосымшаны ашу", web_app=WebAppInfo(url=MINI_APP_URL))])
     buttons.append([
         InlineKeyboardButton(text="📖 Нұсқаулық", callback_data="help"),
         InlineKeyboardButton(text="🏆 Рейтинг", callback_data="rating"),

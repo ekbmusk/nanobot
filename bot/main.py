@@ -12,8 +12,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 BOT_COMMANDS = [
-    BotCommand(command="start",   description="🏠 Басты бет"),
-    BotCommand(command="app",     description="🚀 Қосымшаны ашу"),
+    BotCommand(command="start",   description="⚛️ Басты бет"),
+    BotCommand(command="app",     description="🔬 Қосымшаны ашу"),
     BotCommand(command="profile", description="👤 Менің профилім"),
     BotCommand(command="rating",  description="🏆 Рейтинг TOP-10"),
     BotCommand(command="streak",  description="🔥 Менің streak"),

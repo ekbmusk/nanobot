@@ -7,7 +7,7 @@ def get_main_keyboard() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(text="🚀 Қосымшаны ашу", web_app=WebAppInfo(url=MINI_APP_URL)),
+                KeyboardButton(text="⚛️ Қосымшаны ашу", web_app=WebAppInfo(url=MINI_APP_URL)),
                 KeyboardButton(text="👤 Профиль"),
             ],
             [

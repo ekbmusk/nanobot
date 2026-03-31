@@ -10,7 +10,7 @@ router = Router()
 async def menu_progress(message: Message):
     await message.answer(
         "📊 <b>Прогресс</b>\n\n"
-        "Прогрессіңізді Mini App ішінен көре аласыз!",
+        "Физика бойынша прогрессіңізді Mini App ішінен көре аласыз!",
         parse_mode="HTML",
         reply_markup=open_app_button(),
     )
