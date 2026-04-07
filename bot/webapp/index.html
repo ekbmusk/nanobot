@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Кім боламын?</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ====== SVG Icon Definitions ====== -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <!-- Compass / Career -->
+        <symbol id="ico-compass" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M20 28l-2-10 10 2-2 10-6-2z" fill="currentColor" opacity="0.25"/>
+            <path d="M18 30l4-12 12-4-4 12-12 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="24" cy="24" r="2" fill="currentColor"/>
+        </symbol>
+        <!-- Questions / Clipboard -->
+        <symbol id="ico-clipboard" viewBox="0 0 48 48" fill="none">
+            <rect x="10" y="8" width="28" height="34" rx="4" stroke="currentColor" stroke-width="2.5"/>
+            <rect x="18" y="4" width="12" height="8" rx="3" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="16" y1="22" x2="32" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="28" x2="28" y2="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="34" x2="24" y2="34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        <!-- Categories / Grid -->
+        <symbol id="ico-grid" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="6" width="15" height="15" rx="4" stroke="currentColor" stroke-width="2.5"/>
+            <rect x="27" y="6" width="15" height="15" rx="4" stroke="currentColor" stroke-width="2.5" fill="currentColor" opacity="0.15"/>
+            <rect x="6" y="27" width="15" height="15" rx="4" stroke="currentColor" stroke-width="2.5" fill="currentColor" opacity="0.15"/>
+            <rect x="27" y="27" width="15" height="15" rx="4" stroke="currentColor" stroke-width="2.5"/>
+        </symbol>
+        <!-- Professions / Briefcase -->
+        <symbol id="ico-briefcase" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="16" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M16 16v-4a4 4 0 014-4h8a4 4 0 014 4v4" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="6" y1="28" x2="42" y2="28" stroke="currentColor" stroke-width="2"/>
+            <rect x="20" y="24" width="8" height="8" rx="2" fill="currentColor" opacity="0.25"/>
+        </symbol>
+        <!-- Timer / Clock -->
+        <symbol id="ico-clock" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5"/>
+            <polyline points="24,12 24,24 32,28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Target -->
+        <symbol id="ico-target" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/>
+            <circle cx="24" cy="24" r="13" stroke="currentColor" stroke-width="2"/>
+            <circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="2"/>
+            <circle cx="24" cy="24" r="2" fill="currentColor"/>
+        </symbol>
+        <!-- Star -->
+        <symbol id="ico-star" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4l6.18 12.52L44 18.82l-10 9.74L36.36 42 24 35.52 11.64 42 14 28.56l-10-9.74 13.82-2.3z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Check Circle -->
+        <symbol id="ico-check" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5"/>
+            <polyline points="15,24 22,31 33,18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Send / Arrow -->
+        <symbol id="ico-send" viewBox="0 0 48 48" fill="none">
+            <path d="M6 24l36-16-10 16 10 16z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <line x1="42" y1="8" x2="32" y2="24" stroke="currentColor" stroke-width="2.5"/>
+        </symbol>
+        <!-- Sparkle -->
+        <symbol id="ico-sparkle" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4c0 11.05-8.95 20-20 20 11.05 0 20 8.95 20 20 0-11.05 8.95-20 20-20-11.05 0-20-8.95-20-20z" stroke="currentColor" stroke-width="2.5"/>
+        </symbol>
+        <!-- Category icons -->
+        <symbol id="ico-cat-interests" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="2"/>
+            <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2"/>
+            <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+            <line x1="16" y1="3" x2="16" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="25" x2="16" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="3" y1="16" x2="7" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="25" y1="16" x2="29" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="ico-cat-strengths" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4l3 6h6l-5 4 2 6-6-3-6 3 2-6-5-4h6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="16" cy="25" r="4" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="ico-cat-subjects" viewBox="0 0 32 32" fill="none">
+            <rect x="5" y="4" width="22" height="24" rx="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="10" y1="11" x2="22" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="10" y1="16" x2="22" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="10" y1="21" x2="17" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="ico-cat-values" viewBox="0 0 32 32" fill="none">
+            <path d="M16 28l-10-10a7 7 0 0110-10 7 7 0 0110 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="ico-cat-workstyle" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 8v8l6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="ico-cat-digital" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="16" rx="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="10" y1="26" x2="22" y2="26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="22" x2="16" y2="26" stroke="currentColor" stroke-width="2"/>
+            <polyline points="11,15 14,12 17,16 21,11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Refresh -->
+        <symbol id="ico-refresh" viewBox="0 0 32 32" fill="none">
+            <path d="M26 16a10 10 0 11-3-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <polyline points="27,4 27,11 20,11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- User / Profile -->
+        <symbol id="ico-user" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="18" r="10" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M6 42c0-9.94 8.06-18 18-18s18 8.06 18 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- Trophy -->
+        <symbol id="ico-trophy" viewBox="0 0 48 48" fill="none">
+            <path d="M14 8h20v14c0 5.52-4.48 10-10 10s-10-4.48-10-10V8z" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M14 14H8c0 5 3 8 6 9" stroke="currentColor" stroke-width="2"/>
+            <path d="M34 14h6c0 5-3 8-6 9" stroke="currentColor" stroke-width="2"/>
+            <line x1="24" y1="32" x2="24" y2="38" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="16" y1="38" x2="32" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- Shield / Confidence -->
+        <symbol id="ico-shield" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4L6 12v12c0 11 8 18 18 20 10-2 18-9 18-20V12L24 4z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <polyline points="16,24 22,30 32,18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Brain / Personality -->
+        <symbol id="ico-brain" viewBox="0 0 48 48" fill="none">
+            <path d="M24 44V24" stroke="currentColor" stroke-width="2"/>
+            <path d="M24 24c-4-2-10-2-12 2s0 10 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M24 24c4-2 10-2 12 2s0 10-4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M12 18c-4-2-6-8-2-12s10-4 14 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M36 18c4-2 6-8 2-12s-10-4-14 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- Chart / Radar -->
+        <symbol id="ico-chart" viewBox="0 0 48 48" fill="none">
+            <polygon points="24,6 42,16 42,32 24,42 6,32 6,16" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="24,14 34,20 34,28 24,34 14,28 14,20" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="24" cy="24" r="2" fill="currentColor"/>
+        </symbol>
+        <!-- History / Clock-list -->
+        <symbol id="ico-history" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="26" r="18" stroke="currentColor" stroke-width="2.5"/>
+            <polyline points="24,16 24,26 32,30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 8l5 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M40 8l-5 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- Arrow left -->
+        <symbol id="ico-arrow-left" viewBox="0 0 32 32" fill="none">
+            <polyline points="20,6 10,16 20,26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Chevron right -->
+        <symbol id="ico-chevron-right" viewBox="0 0 32 32" fill="none">
+            <polyline points="12,6 22,16 12,26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Profession field icons -->
+        <symbol id="ico-field-it" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="16" rx="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="10" y1="26" x2="22" y2="26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="22" x2="16" y2="26" stroke="currentColor" stroke-width="2"/>
+            <polyline points="10,15 13,12 16,16 19,11 22,14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="ico-field-medical" viewBox="0 0 32 32" fill="none">
+            <rect x="8" y="8" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="16" y1="12" x2="16" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="12" y1="16" x2="20" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="ico-field-engineering" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="2"/>
+            <circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+            <line x1="16" y1="6" x2="16" y2="10" stroke="currentColor" stroke-width="2"/>
+            <line x1="16" y1="22" x2="16" y2="26" stroke="currentColor" stroke-width="2"/>
+            <line x1="6" y1="16" x2="10" y2="16" stroke="currentColor" stroke-width="2"/>
+            <line x1="22" y1="16" x2="26" y2="16" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="ico-field-creative" viewBox="0 0 32 32" fill="none">
+            <circle cx="11" cy="21" r="5" stroke="currentColor" stroke-width="2"/>
+            <circle cx="21" cy="21" r="5" stroke="currentColor" stroke-width="2"/>
+            <circle cx="16" cy="13" r="5" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="ico-field-business" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="14" width="24" height="14" rx="3" stroke="currentColor" stroke-width="2"/>
+            <path d="M11 14v-3a5 5 0 0110 0v3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="16" cy="21" r="2" fill="currentColor"/>
+        </symbol>
+        <symbol id="ico-field-education" viewBox="0 0 32 32" fill="none">
+            <polygon points="16,4 2,12 16,20 30,12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M8 15v8c0 3 4 5 8 5s8-2 8-5v-8" stroke="currentColor" stroke-width="2"/>
+            <line x1="28" y1="12" x2="28" y2="24" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+        <symbol id="ico-field-science" viewBox="0 0 32 32" fill="none">
+            <path d="M12 4v10l-6 12a3 3 0 003 3h14a3 3 0 003-3l-6-12V4" stroke="currentColor" stroke-width="2"/>
+            <line x1="10" y1="4" x2="22" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="14" cy="22" r="2" fill="currentColor" opacity="0.5"/>
+            <circle cx="19" cy="20" r="1.5" fill="currentColor" opacity="0.5"/>
+        </symbol>
+        <symbol id="ico-field-law" viewBox="0 0 32 32" fill="none">
+            <line x1="16" y1="4" x2="16" y2="24" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="6" y1="10" x2="26" y2="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M6 10l2 8h-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M26 10l2 8h-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <line x1="10" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="ico-field-agriculture" viewBox="0 0 32 32" fill="none">
+            <path d="M16 28V16" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 16c-6-2-10-8-8-14 6 2 10 8 8 14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M16 20c4-1 8-6 7-11-5 1-8 6-7 11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="ico-field-tourism" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="12" r="8" stroke="currentColor" stroke-width="2"/>
+            <ellipse cx="16" cy="12" rx="3" ry="8" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="8" y1="12" x2="24" y2="12" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="16" y1="22" x2="16" y2="28" stroke="currentColor" stroke-width="2"/>
+            <line x1="10" y1="28" x2="22" y2="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="ico-field-sport" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 4a12 12 0 000 24" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <path d="M8 8l4 4M20 20l4 4M8 24l4-4M20 12l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </symbol>
+    </svg>
+
+    <!-- ====== Decorative BG Pattern ====== -->
+    <div class="bg-pattern" aria-hidden="true"></div>
+
+    <!-- ====== Welcome Screen ====== -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-hero">
+            <div class="hero-ornament" aria-hidden="true"></div>
+            <div class="hero-icon">
+                <svg class="icon icon-xl"><use href="#ico-compass"/></svg>
+            </div>
+            <h1 class="hero-title">Кім боламын<span class="accent">?</span></h1>
+            <p class="hero-subtitle">Кәсіби бағдар тесті</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card" style="--delay:0.1s">
+                <svg class="icon icon-md"><use href="#ico-clipboard"/></svg>
+                <div class="stat-card-body">
+                    <span class="stat-card-value">30</span>
+                    <span class="stat-card-label">сұрақ</span>
+                </div>
+            </div>
+            <div class="stat-card" style="--delay:0.2s">
+                <svg class="icon icon-md"><use href="#ico-grid"/></svg>
+                <div class="stat-card-body">
+                    <span class="stat-card-value">6</span>
+                    <span class="stat-card-label">блок</span>
+                </div>
+            </div>
+            <div class="stat-card" style="--delay:0.3s">
+                <svg class="icon icon-md"><use href="#ico-briefcase"/></svg>
+                <div class="stat-card-body">
+                    <span class="stat-card-value">65+</span>
+                    <span class="stat-card-label">мамандық</span>
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-start" class="btn-primary btn-glow">
+            <span>Тестті бастау</span>
+            <svg class="icon icon-sm btn-arrow"><use href="#ico-send"/></svg>
+        </button>
+
+        <button id="btn-profile" class="btn-secondary" hidden>
+            <svg class="icon icon-sm"><use href="#ico-user"/></svg>
+            <span>Менің профилім</span>
+        </button>
+
+        <p class="welcome-footer">Шамамен 5-7 минут</p>
+    </div>
+
+    <!-- ====== Profile Screen ====== -->
+    <div id="profile-screen" class="screen">
+        <div class="profile-top-bar">
+            <button id="btn-profile-back" class="btn-icon">
+                <svg class="icon icon-sm"><use href="#ico-arrow-left"/></svg>
+            </button>
+            <span class="profile-top-title">Профиль</span>
+            <div style="width:36px"></div>
+        </div>
+
+        <!-- User Card -->
+        <div class="profile-user-card">
+            <div id="profile-avatar" class="profile-avatar"></div>
+            <h2 id="profile-name" class="profile-name"></h2>
+            <div class="profile-meta">
+                <div class="profile-meta-item">
+                    <span id="profile-tests-count" class="profile-meta-val">0</span>
+                    <span class="profile-meta-lbl">тест</span>
+                </div>
+                <div class="profile-meta-divider"></div>
+                <div class="profile-meta-item">
+                    <span id="profile-avg-confidence" class="profile-meta-val">—</span>
+                    <span class="profile-meta-lbl">сенімділік</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personality Type -->
+        <div id="profile-type-section" class="profile-section" hidden>
+            <div class="section-label"><svg class="icon icon-xs"><use href="#ico-brain"/></svg> Сенің типің</div>
+            <div class="profile-type-card">
+                <span id="profile-type-icon" class="profile-type-icon"></span>
+                <div class="profile-type-info">
+                    <h3 id="profile-type-name" class="profile-type-name"></h3>
+                    <p id="profile-type-desc" class="profile-type-desc"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Radar Chart -->
+        <div id="profile-radar-section" class="profile-section" hidden>
+            <div class="section-label"><svg class="icon icon-xs"><use href="#ico-chart"/></svg> Доменлер бойынша скор</div>
+            <div class="radar-wrap">
+                <svg id="radar-chart" viewBox="0 0 300 260" class="radar-svg"></svg>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div id="profile-history-section" class="profile-section">
+            <div class="section-label"><svg class="icon icon-xs"><use href="#ico-history"/></svg> Тест тарихы</div>
+            <div id="profile-history-list" class="profile-history-list">
+                <p class="profile-empty">Әлі тест тапсырылмаған</p>
+            </div>
+        </div>
+
+        <button id="btn-profile-start" class="btn-primary btn-glow" style="margin-top:auto">
+            <span>Жаңа тест бастау</span>
+            <svg class="icon icon-sm btn-arrow"><use href="#ico-send"/></svg>
+        </button>
+    </div>
+
+    <!-- ====== Quiz Screen ====== -->
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-header">
+            <div class="progress-section">
+                <div class="progress-meta">
+                    <span id="progress-label" class="progress-label">1 / 30</span>
+                    <div id="category-badge" class="category-badge">
+                        <svg class="icon icon-xs cat-icon"><use href="#ico-cat-interests"/></svg>
+                        <span class="cat-label">Қызығушылықтар</span>
+                    </div>
+                    <span id="timer-display" class="timer">0:00</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-container" class="question-container">
+            <h2 id="question-text" class="question-text"></h2>
+            <div id="options-container" class="options-container"></div>
+        </div>
+
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <!-- ====== Category Transition ====== -->
+    <div id="transition-screen" class="screen">
+        <div class="transition-content">
+            <div class="transition-icon-wrap">
+                <svg id="transition-icon" class="icon icon-jumbo"><use href="#ico-target"/></svg>
+            </div>
+            <h2 id="transition-title" class="transition-title"></h2>
+            <p id="transition-desc" class="transition-desc"></p>
+            <div id="transition-progress" class="transition-progress"></div>
+        </div>
+    </div>
+
+    <!-- ====== Completion Screen ====== -->
+    <div id="completion-screen" class="screen">
+        <div class="completion-content">
+            <div class="completion-burst" aria-hidden="true"></div>
+            <div class="completion-icon-wrap">
+                <svg class="icon icon-jumbo"><use href="#ico-check"/></svg>
+            </div>
+            <h2 class="completion-title">Тест аяқталды!</h2>
+            <div class="completion-stats">
+                <div class="completion-stat">
+                    <svg class="icon icon-sm"><use href="#ico-clipboard"/></svg>
+                    <span class="completion-stat-val" id="stat-questions">30</span>
+                    <span class="completion-stat-lbl">сұрақ</span>
+                </div>
+                <div class="completion-divider"></div>
+                <div class="completion-stat">
+                    <svg class="icon icon-sm"><use href="#ico-clock"/></svg>
+                    <span class="completion-stat-val" id="stat-time">0:00</span>
+                    <span class="completion-stat-lbl">уақыт</span>
+                </div>
+            </div>
+            <p class="completion-hint">Нәтижені ботқа жіберіп, ТОП-5 мамандығыңды біл</p>
+            <button id="btn-submit" class="btn-primary btn-glow">
+                <span>Нәтижені жіберу</span>
+                <svg class="icon icon-sm btn-arrow"><use href="#ico-send"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ====== Results Screen ====== -->
+    <div id="results-screen" class="screen">
+        <div class="results-header">
+            <h2 class="results-title">Сенің нәтижең</h2>
+            <p class="results-subtitle">ТОП-5 мамандық ұсынысы</p>
+        </div>
+        <div id="results-list" class="results-list"></div>
+        <div class="results-footer">
+            <button id="btn-send-results" class="btn-primary btn-glow">
+                <span>Ботқа жіберу</span>
+                <svg class="icon icon-sm btn-arrow"><use href="#ico-send"/></svg>
+            </button>
+            <button id="btn-results-profile" class="btn-secondary btn-sm">
+                <svg class="icon icon-sm"><use href="#ico-star"/></svg>
+                <span>Профилімді көру</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ====== Profession Detail Modal ====== -->
+    <div id="profession-modal" class="modal-overlay" hidden>
+        <div class="modal-sheet">
+            <div class="modal-handle" aria-hidden="true"></div>
+            <button class="modal-close" id="modal-close-btn" aria-label="Жабу">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </button>
+            <div class="modal-body">
+                <div class="modal-hero">
+                    <span id="modal-emoji" class="modal-emoji"></span>
+                    <div>
+                        <h3 id="modal-name" class="modal-name"></h3>
+                        <span id="modal-field" class="modal-field"></span>
+                    </div>
+                </div>
+                <div id="modal-match" class="modal-match-bar">
+                    <div class="match-bar-track"><div id="modal-match-fill" class="match-bar-fill"></div></div>
+                    <span id="modal-match-pct" class="match-pct"></span>
+                </div>
+                <p id="modal-desc" class="modal-desc"></p>
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <svg class="icon icon-xs"><use href="#ico-briefcase"/></svg>
+                        <span>Жалақы мен сұраныс</span>
+                    </div>
+                    <div class="modal-info-grid">
+                        <div class="modal-info-item">
+                            <span class="modal-info-label">Жалақы</span>
+                            <span id="modal-salary" class="modal-info-value"></span>
+                        </div>
+                        <div class="modal-info-item">
+                            <span class="modal-info-label">Сұраныс</span>
+                            <span id="modal-demand" class="modal-info-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <svg class="icon icon-xs"><use href="#ico-cat-subjects"/></svg>
+                        <span>ҰБТ пәндері</span>
+                    </div>
+                    <div id="modal-subjects" class="modal-tags"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <svg class="icon icon-xs"><use href="#ico-target"/></svg>
+                        <span>ЖОО-лар</span>
+                    </div>
+                    <div id="modal-universities" class="modal-uni-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

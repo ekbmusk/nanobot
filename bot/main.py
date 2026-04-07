@@ -1,64 +1,104 @@
+"""«Кім боламын?» — Кәсіби бағдар Telegram боты.
+
+Негізгі файл: ботты іске қосу, роутерлерді тіркеу, Mini App веб-серверін қосу.
+"""
+
 import asyncio
+import json
 import logging
+import os
+import sys
+
+from aiohttp import web
 from aiogram import Bot, Dispatcher
-from aiogram.enums import ParseMode
+from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
-from aiogram.types import BotCommand, BotCommandScopeDefault
+from aiogram.enums import ParseMode
 
-from config import BOT_TOKEN
-from handlers import start, profile, rating, streak, help, menu, notifications
+from config import BOT_TOKEN, WEBAPP_HOST, WEBAPP_PORT, WEBAPP_URL
+from handlers import start, survey, results, info
+from handlers import webapp as webapp_handler
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+# Логгинг баптау
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    stream=sys.stdout,
+)
 logger = logging.getLogger(__name__)
 
-BOT_COMMANDS = [
-    BotCommand(command="start",   description="⚛️ Басты бет"),
-    BotCommand(command="app",     description="🔬 Қосымшаны ашу"),
-    BotCommand(command="profile", description="👤 Менің профилім"),
-    BotCommand(command="rating",  description="🏆 Рейтинг TOP-10"),
-    BotCommand(command="streak",  description="🔥 Менің streak"),
-    BotCommand(command="help",    description="❓ Көмек"),
-]
+# Сұрақтарды бір рет жүктеу
+DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+
+with open(os.path.join(DATA_DIR, "questions.json"), "r", encoding="utf-8") as f:
+    QUESTIONS_DATA = json.load(f)
+with open(os.path.join(DATA_DIR, "professions.json"), "r", encoding="utf-8") as f:
+    PROFESSIONS_DATA = json.load(f)
+with open(os.path.join(DATA_DIR, "universities.json"), "r", encoding="utf-8") as f:
+    UNIVERSITIES_DATA = json.load(f)
+
+
+async def api_questions_handler(request):
+    """GET /api/questions"""
+    return web.json_response(QUESTIONS_DATA)
+
+
+async def api_professions_handler(request):
+    """GET /api/professions"""
+    return web.json_response(PROFESSIONS_DATA)
+
+
+async def api_universities_handler(request):
+    """GET /api/universities"""
+    return web.json_response(UNIVERSITIES_DATA)
 
 
 async def main():
-    if not BOT_TOKEN:
-        logger.error("BOT_TOKEN орнатылмаған! .env файлын тексеріңіз.")
-        return
+    """Ботты іске қосу."""
+    logger.info("🚀 «Кім боламын?» боты іске қосылуда...")
 
+    # Бот пен диспетчер жасау
     bot = Bot(
         token=BOT_TOKEN,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
-    dp = Dispatcher()
+    dp = Dispatcher(storage=MemoryStorage())
 
+    # Роутерлерді тіркеу
     dp.include_router(start.router)
-    dp.include_router(profile.router)
-    dp.include_router(rating.router)
-    dp.include_router(streak.router)
-    dp.include_router(help.router)
-    dp.include_router(notifications.router)
-    dp.include_router(menu.router)
+    dp.include_router(survey.router)
+    dp.include_router(webapp_handler.router)
+    dp.include_router(results.router)
+    dp.include_router(info.router)
 
-    await bot.set_my_commands(BOT_COMMANDS, scope=BotCommandScopeDefault())
-    logger.info("Бот командалары орнатылды.")
+    logger.info("✅ Роутерлер тіркелді: start, survey, webapp, results, info")
 
-    # Start push-notification background loop
-    notif_task = asyncio.create_task(
-        notifications.notification_loop(bot, interval_seconds=3600)
-    )
-    logger.info("Хабарландыру тексерушісі іске қосылды (сағатына 1 рет).")
+    # Mini App веб-серверін баптау
+    web_app = web.Application()
+    webapp_dir = os.path.join(os.path.dirname(__file__), "webapp")
+    web_app.router.add_get("/api/questions", api_questions_handler)
+    web_app.router.add_get("/api/professions", api_professions_handler)
+    web_app.router.add_get("/api/universities", api_universities_handler)
+    web_app.router.add_static("/webapp/", webapp_dir)
 
+    runner = web.AppRunner(web_app)
+    await runner.setup()
+    site = web.TCPSite(runner, WEBAPP_HOST, WEBAPP_PORT, reuse_address=True)
+    await site.start()
+    logger.info(f"🌐 Mini App веб-сервер: http://{WEBAPP_HOST}:{WEBAPP_PORT}")
+    if WEBAPP_URL:
+        logger.info(f"🔗 Mini App URL: {WEBAPP_URL}/webapp/index.html")
+    else:
+        logger.warning("⚠️ WEBAPP_URL орнатылмаған — Mini App батырмасы көрсетілмейді")
+
+    # Ботты іске қосу (long-polling)
     try:
-        logger.info("Бот іске қосылды...")
-        await dp.start_polling(bot, skip_updates=True)
+        logger.info("🤖 Бот жұмыс істеп тұр! Тоқтату үшін: Ctrl+C")
+        await dp.start_polling(bot)
     finally:
-        notif_task.cancel()
-        try:
-            await notif_task
-        except asyncio.CancelledError:
-            pass
-        logger.info("Хабарландыру тексерушісі тоқтатылды.")
+        await runner.cleanup()
+        await bot.session.close()
+        logger.info("🛑 Бот тоқтатылды.")
 
 
 if __name__ == "__main__":

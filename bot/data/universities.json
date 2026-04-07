@@ -1,0 +1,200 @@
+{
+  "universities": [
+    {
+      "id": "nu",
+      "name": "Назарбаев Университеті",
+      "city": "Астана",
+      "website": "https://nu.edu.kz",
+      "programs": ["Компьютерлік ғылымдар", "Инженерия", "Медицина", "Экономика", "Құқық"]
+    },
+    {
+      "id": "kbtu",
+      "name": "Қазақ-Британ техникалық университеті (КБТУ)",
+      "city": "Алматы",
+      "website": "https://kbtu.edu.kz",
+      "programs": ["IT", "Мұнай-газ инженериясы", "Бизнес", "Математика", "Геология"]
+    },
+    {
+      "id": "sdu",
+      "name": "Сүлейман Демирел университеті (SDU)",
+      "city": "Қаскелең",
+      "website": "https://sdu.edu.kz",
+      "programs": ["Компьютерлік ғылымдар", "Бизнес", "Құқық", "Педагогика", "Инженерия"]
+    },
+    {
+      "id": "kimep",
+      "name": "КИМЭП Университеті",
+      "city": "Алматы",
+      "website": "https://kimep.kz",
+      "programs": ["Бизнес", "Экономика", "Құқық", "Журналистика", "Халықаралық қатынастар"]
+    },
+    {
+      "id": "aitu",
+      "name": "Astana IT University (AITU)",
+      "city": "Астана",
+      "website": "https://aitu.edu.kz",
+      "programs": ["Бағдарламалау", "Киберқауіпсіздік", "Data Science", "Компьютерлік ғылымдар", "Дизайн"]
+    },
+    {
+      "id": "kaznu",
+      "name": "Әл-Фараби атындағы ҚазҰУ",
+      "city": "Алматы",
+      "website": "https://kaznu.kz",
+      "programs": ["Барлық бағыттар: IT, Медицина, Құқық, Экономика, Ғылым, Педагогика"]
+    },
+    {
+      "id": "enu",
+      "name": "Л.Н. Гумилёв атындағы ЕҰУ",
+      "city": "Астана",
+      "website": "https://enu.kz",
+      "programs": ["IT", "Инженерия", "Экономика", "Құқық", "Педагогика", "Медицина"]
+    },
+    {
+      "id": "kmu",
+      "name": "Қазақстан медицина университеті (ҚМУ / КазМУНО)",
+      "city": "Алматы",
+      "website": "https://kaznmu.kz",
+      "programs": ["Жалпы медицина", "Стоматология", "Фармация", "Қоғамдық денсаулық"]
+    },
+    {
+      "id": "amu",
+      "name": "Астана медицина университеті (АМУ)",
+      "city": "Астана",
+      "website": "https://amu.edu.kz",
+      "programs": ["Жалпы медицина", "Стоматология", "Фармация", "Педиатрия"]
+    },
+    {
+      "id": "satbayev",
+      "name": "Сәтбаев университеті (Satbayev University)",
+      "city": "Алматы",
+      "website": "https://satbayev.university",
+      "programs": ["Мұнай-газ", "IT", "Құрылыс", "Тау-кен", "Сәулет"]
+    },
+    {
+      "id": "iitu",
+      "name": "Халықаралық IT университеті (IITU)",
+      "city": "Алматы",
+      "website": "https://iitu.edu.kz",
+      "programs": ["Бағдарламалау", "Киберқауіпсіздік", "Data Science", "Робототехника"]
+    },
+    {
+      "id": "narxoz",
+      "name": "Нархоз университеті",
+      "city": "Алматы",
+      "website": "https://narxoz.edu.kz",
+      "programs": ["Экономика", "Бизнес", "IT", "Құқық", "Маркетинг"]
+    },
+    {
+      "id": "kazgasa",
+      "name": "Қазақ сәулет-құрылыс академиясы (КазГАСА)",
+      "city": "Алматы",
+      "website": "https://kazgasa.kz",
+      "programs": ["Сәулет", "Құрылыс", "Дизайн", "Қала жоспарлау"]
+    },
+    {
+      "id": "turan",
+      "name": "Тұран университеті",
+      "city": "Алматы",
+      "website": "https://turan-edu.kz",
+      "programs": ["Бизнес", "Құқық", "Журналистика", "Дизайн", "IT"]
+    },
+    {
+      "id": "abai",
+      "name": "Абай атындағы ҚазҰПУ",
+      "city": "Алматы",
+      "website": "https://kaznpu.kz",
+      "programs": ["Педагогика", "Психология", "Филология", "Тарих", "Биология", "Математика"]
+    },
+    {
+      "id": "kazatu",
+      "name": "Қазақ ұлттық аграрлық зерттеу университеті",
+      "city": "Алматы",
+      "website": "https://kaznaru.edu.kz",
+      "programs": ["Ветеринария", "Ауыл шаруашылығы", "Экология", "Тағам технологиясы"]
+    },
+    {
+      "id": "kazufk",
+      "name": "Қазақ спорт және туризм академиясы",
+      "city": "Алматы",
+      "website": "https://kazasl.edu.kz",
+      "programs": ["Дене шынықтыру", "Спорт менеджменті", "Туризм"]
+    }
+  ],
+  "profession_university_map": {
+    "software_engineer": ["aitu", "kbtu", "nu", "iitu", "sdu", "kaznu"],
+    "data_scientist": ["nu", "aitu", "kbtu", "iitu", "kaznu"],
+    "cybersecurity": ["aitu", "iitu", "kbtu", "satbayev"],
+    "doctor": ["kmu", "amu", "nu", "kaznu"],
+    "pharmacist": ["kmu", "amu", "kaznu"],
+    "psychologist": ["kaznu", "abai", "sdu", "enu"],
+    "civil_engineer": ["satbayev", "kazgasa", "enu", "kbtu"],
+    "mechanical_engineer": ["satbayev", "kbtu", "enu"],
+    "architect": ["kazgasa", "satbayev", "sdu"],
+    "teacher": ["abai", "enu", "sdu", "kaznu"],
+    "economist": ["narxoz", "kimep", "nu", "kaznu", "enu"],
+    "marketing_specialist": ["kimep", "narxoz", "turan", "sdu"],
+    "lawyer": ["kimep", "kaznu", "enu", "sdu", "turan"],
+    "graphic_designer": ["kazgasa", "turan", "sdu", "aitu"],
+    "ux_ui_designer": ["aitu", "iitu", "sdu", "kbtu"],
+    "journalist": ["kimep", "kaznu", "turan", "enu"],
+    "oil_gas_engineer": ["kbtu", "satbayev", "nu", "enu"],
+    "dentist": ["kmu", "amu"],
+    "entrepreneur": ["kimep", "narxoz", "nu", "sdu"],
+    "biologist": ["kaznu", "enu", "nu"],
+    "translator": ["kaznu", "abai", "kimep", "enu"],
+    "sport_trainer": ["kazufk", "abai"],
+    "ecologist": ["kaznu", "kazatu", "enu"],
+    "project_manager": ["kimep", "nu", "narxoz", "sdu", "kbtu"],
+    "veterinarian": ["kazatu", "kaznu"],
+
+    "mobile_developer": ["aitu", "kbtu", "iitu", "sdu", "nu"],
+    "game_developer": ["aitu", "iitu", "kbtu", "sdu"],
+    "devops_engineer": ["aitu", "kbtu", "iitu", "nu"],
+    "ai_specialist": ["nu", "kbtu", "aitu", "kaznu", "sdu"],
+    "web_developer": ["aitu", "iitu", "kbtu", "sdu"],
+
+    "surgeon": ["kmu", "amu"],
+    "nutritionist": ["kmu", "amu", "kaznu"],
+    "speech_therapist": ["kaznu", "abai", "kmu"],
+    "paramedic": ["kmu", "amu"],
+
+    "electrical_engineer": ["satbayev", "nu", "enu"],
+    "environmental_engineer": ["satbayev", "kaznu", "nu"],
+    "aerospace_engineer": ["nu", "satbayev", "enu"],
+    "mining_engineer": ["satbayev", "kaznu"],
+
+    "social_worker": ["abai", "kaznu", "enu"],
+    "university_professor": ["nu", "kaznu", "enu", "abai"],
+    "librarian": ["abai", "kaznu"],
+
+    "accountant": ["narxoz", "kimep", "kaznu", "turan"],
+    "financial_analyst": ["kimep", "narxoz", "kbtu", "nu"],
+    "hr_manager": ["kimep", "narxoz", "kaznu", "sdu"],
+    "logistics_manager": ["narxoz", "kimep", "turan", "kaznu"],
+    "banker": ["narxoz", "kimep", "kbtu", "nu"],
+
+    "photographer": ["turan", "kaznu", "abai"],
+    "interior_designer": ["kazgasa", "kaznu", "abai"],
+    "fashion_designer": ["kaznu", "abai", "turan"],
+    "musician": ["abai", "kaznu"],
+    "film_director": ["kaznu", "abai", "turan"],
+
+    "judge": ["kaznu", "enu", "kimep"],
+    "diplomat": ["kimep", "kaznu", "enu", "nu"],
+    "police_officer": ["kaznu", "enu"],
+    "customs_officer": ["kaznu", "narxoz", "enu"],
+
+    "chemist": ["kaznu", "nu", "enu"],
+    "physicist": ["kaznu", "nu", "enu", "satbayev"],
+    "geologist": ["satbayev", "kaznu", "nu"],
+    "meteorologist": ["kaznu", "enu"],
+
+    "agronomist": ["kazatu", "kaznu"],
+    "food_technologist": ["kazatu", "kaznu", "satbayev"],
+
+    "hotel_manager": ["turan", "kimep", "narxoz"],
+    "tour_guide": ["turan", "kaznu", "abai"],
+    "flight_attendant": ["turan", "kimep"],
+    "chef": ["turan"]
+  }
+}

@@ -1,9 +1,18 @@
+"""Конфигурация — .env файлынан параметрлерді жүктеу."""
+
 import os
-from dotenv import load_dotenv
 from pathlib import Path
+from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).parent.parent / ".env")
+# .env файлы bot/ немесе жоба корінде болуы мүмкін
+_env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(_env_path)
 
-BOT_TOKEN = os.getenv("BOT_TOKEN", "")
-MINI_APP_URL = os.getenv("MINI_APP_URL", "")
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN орнатылмаған! .env файлын тексеріңіз.")
+
+# Mini App web server
+WEBAPP_URL = os.getenv("WEBAPP_URL", "")
+WEBAPP_HOST = os.getenv("WEBAPP_HOST", "0.0.0.0")
+WEBAPP_PORT = int(os.getenv("WEBAPP_PORT", "8080"))

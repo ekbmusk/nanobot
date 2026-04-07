@@ -8,15 +8,6 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
-*.db
-
-# Node
-node_modules/
-dist/
-.vite/
-
-# Wrangler
-.wrangler/
 
 # IDE
 .vscode/
