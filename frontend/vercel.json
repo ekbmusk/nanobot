@@ -3,6 +3,6 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://RAILWAY_PLACEHOLDER/api/:path*" }
+    { "source": "/api/:path*", "destination": "https://kim-bolamyn-production.up.railway.app/api/:path*" }
   ]
 }
