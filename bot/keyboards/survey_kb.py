@@ -2,18 +2,21 @@
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from i18n import get_text
 
-def get_question_keyboard(question: dict, category_id: str) -> InlineKeyboardMarkup:
+
+def get_question_keyboard(question: dict, category_id: str,
+                          lang: str = "kk") -> InlineKeyboardMarkup:
     """Сұрақ нұсқаларын inline батырмалар ретінде көрсету.
 
     callback_data форматы: answer_{category_id}_{option_index}
-    Мысалы: answer_interests_2
     """
     buttons = []
     for i, option in enumerate(question["options"]):
+        text = get_text(option, "text", lang)
         buttons.append([
             InlineKeyboardButton(
-                text=option["text"],
+                text=text,
                 callback_data=f"answer_{category_id}_{i}",
             )
         ])

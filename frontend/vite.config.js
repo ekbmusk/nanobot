@@ -1,21 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+const isVercel = process.env.VERCEL === '1'
 
 export default defineConfig({
-  plugins: [react()],
-  envDir: '../',
-  server: {
-    port: 3000,
-    host: true,
-    allowedHosts: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-    },
-  },
+  plugins: [react(), tailwindcss()],
+  base: '/',
   build: {
-    outDir: 'dist',
+    outDir: isVercel ? 'dist' : '../bot/webapp',
+    emptyOutDir: true,
+  },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080',
+    },
   },
 })

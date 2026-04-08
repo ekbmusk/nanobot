@@ -3,6 +3,8 @@
 import json
 import os
 
+from i18n import t, get_text, tr_subject, tr_demand
+
 # Деректер файлдарының жолы
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
@@ -25,11 +27,6 @@ def load_universities() -> dict:
 
 def match_professions(tag_scores: dict, top_n: int = 5) -> list:
     """Тег скорлары бойынша ең сәйкес мамандықтарды табу.
-
-    Алгоритм:
-    1. Әр мамандықтың тегтерін пайдаланушы скорларымен салыстыру
-    2. Мамандық скорын есептеу: sum(tag_score[tag] for tag in profession.tags)
-    3. Ең жоғары скорлы N мамандықты қайтару
 
     Args:
         tag_scores: {тег: скор} сөздігі (analyzer-ден).
@@ -70,20 +67,21 @@ def match_professions(tag_scores: dict, top_n: int = 5) -> list:
     return results[:top_n]
 
 
-def format_result_message(matched: list) -> str:
+def format_result_message(matched: list, lang: str = "kk") -> str:
     """Нәтижені Telegram хабарлама форматында шығару.
 
     Args:
         matched: match_professions() нәтижесі.
+        lang: Тіл коды ("kk" немесе "ru").
 
     Returns:
         str: Форматталған хабарлама мәтіні.
     """
     if not matched:
-        return "❌ Кешіріңіз, нәтиже табылмады. Қайта тест тапсырып көріңіз."
+        return t("no_match", lang)
 
     lines = []
-    lines.append("🎯 <b>Сенің ТОП-5 мамандығың:</b>\n")
+    lines.append(t("result_header", lang))
 
     medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"]
 
@@ -91,19 +89,23 @@ def format_result_message(matched: list) -> str:
         prof = item["profession"]
         unis = item["universities"]
 
-        lines.append(f"{medals[i]} <b>{prof['emoji']} {prof['name']}</b>")
-        lines.append(f"   📝 {prof['description']}")
-        lines.append(f"   💰 Жалақы: {prof['salary_range']}")
-        lines.append(f"   📈 Сұраныс: {prof['demand']}")
-        lines.append(f"   📚 ҰБТ пәндері: {', '.join(prof['ent_subjects'])}")
+        name = get_text(prof, "name", lang)
+        desc = get_text(prof, "description", lang)
+        demand = tr_demand(prof["demand"], lang)
+        subjects = [tr_subject(s, lang) for s in prof["ent_subjects"]]
+
+        lines.append(f"{medals[i]} <b>{prof['emoji']} {name}</b>")
+        lines.append(f"   📝 {desc}")
+        lines.append(f"   💰 {t('salary_label', lang)}: {prof['salary_range']}")
+        lines.append(f"   📈 {t('demand_label', lang)}: {demand}")
+        lines.append(f"   📚 {t('ent_label', lang)}: {', '.join(subjects)}")
 
         if unis:
-            uni_names = [u['name'] for u in unis[:3]]
-            lines.append(f"   🏫 ЖОО: {', '.join(uni_names)}")
+            uni_names = [u["name"] for u in unis[:3]]
+            lines.append(f"   🏫 {t('uni_label', lang)}: {', '.join(uni_names)}")
 
         lines.append("")  # Бос жол
 
-    lines.append("💡 <i>Бұл нәтиже сенің жауаптарыңа негізделген ұсыныс. "
-                  "Түпкілікті таңдау — сенің қолыңда!</i>")
+    lines.append(t("result_footer", lang))
 
     return "\n".join(lines)

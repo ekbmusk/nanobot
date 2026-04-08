@@ -10,8 +10,10 @@ from aiogram.fsm.context import FSMContext
 from models.states import SurveyStates
 from models.user_session import UserSession
 from keyboards.survey_kb import get_question_keyboard
-from config import WEBAPP_URL
 from keyboards.main_kb import get_restart_inline
+from config import WEBAPP_URL
+from database import save_result, get_user_lang
+from i18n import t, get_text
 from services.analyzer import calculate_tag_scores
 from services.matcher import match_professions, format_result_message
 
@@ -24,7 +26,7 @@ with open(os.path.join(DATA_DIR, "questions.json"), "r", encoding="utf-8") as f:
 
 # Категориялар тізімі (ретімен)
 CATEGORIES = QUESTIONS_DATA["categories"]
-CATEGORY_ORDER = [cat["id"] for cat in CATEGORIES]  # ["interests", "strengths", "subjects"]
+CATEGORY_ORDER = [cat["id"] for cat in CATEGORIES]
 
 # Категория → FSM State картасы
 CATEGORY_STATE_MAP = {
@@ -48,29 +50,38 @@ def get_category_data(category_id: str) -> dict:
 @router.callback_query(F.data == "start_survey")
 async def start_survey(callback: CallbackQuery, state: FSMContext):
     """Сауалнаманы бастау — бірінші категорияның бірінші сұрағы."""
+    # Тілді сақтау
+    data = await state.get_data()
+    lang = data.get("lang")
+    if not lang:
+        lang = await get_user_lang(callback.from_user.id) or "kk"
+
     await state.clear()
 
     # Жаңа сессия жасау
     session = UserSession.create_empty()
     session["current_category"] = CATEGORY_ORDER[0]
     session["current_question"] = 0
+    session["lang"] = lang
     await state.update_data(**session)
 
     # Бірінші категорияны көрсету
     first_category = get_category_data(CATEGORY_ORDER[0])
+    cat_name = get_text(first_category, "name", lang)
+    cat_desc = get_text(first_category, "description", lang)
+
     await callback.message.edit_text(
-        f"{first_category['emoji']} <b>{first_category['name']}</b>\n\n"
-        f"{first_category['description']}\n\n"
-        f"📝 Сұрақ 1/{len(first_category['questions'])}:",
-        parse_mode="HTML",
+        f"{first_category['emoji']} <b>{cat_name}</b>\n\n"
+        f"{cat_desc}\n\n"
+        f"{t('question_n', lang).format(n=1, total=len(first_category['questions']))}",
     )
 
     # Бірінші сұрақты қою
     question = first_category["questions"][0]
+    q_text = get_text(question, "text", lang)
     await callback.message.answer(
-        f"❓ <b>{question['text']}</b>",
-        parse_mode="HTML",
-        reply_markup=get_question_keyboard(question, CATEGORY_ORDER[0]),
+        f"❓ <b>{q_text}</b>",
+        reply_markup=get_question_keyboard(question, CATEGORY_ORDER[0], lang),
     )
 
     await state.set_state(CATEGORY_STATE_MAP[CATEGORY_ORDER[0]])
@@ -80,25 +91,23 @@ async def start_survey(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data.startswith("answer_"))
 async def process_answer(callback: CallbackQuery, state: FSMContext):
     """Жауапты өңдеу және келесі сұрақты көрсету."""
-    # callback_data форматы: answer_{category_id}_{option_index}
     parts = callback.data.split("_")
     category_id = parts[1]
     option_index = int(parts[2])
 
-    # Ағымдағы деректерді алу
     data = await state.get_data()
+    lang = data.get("lang", "kk")
     current_q_index = data.get("current_question", 0)
     answers = data.get("answers", [])
 
-    # Категория мен сұрақты табу
     category_data = get_category_data(category_id)
     if not category_data:
-        await callback.answer("❌ Қате! Қайта бастаңыз: /start")
+        await callback.answer(t("error_restart", lang))
         return
 
     questions = category_data["questions"]
     if current_q_index >= len(questions):
-        await callback.answer("Бұл сұрақ аяқталған!")
+        await callback.answer(t("question_passed", lang))
         return
 
     current_question = questions[current_q_index]
@@ -113,18 +122,19 @@ async def process_answer(callback: CallbackQuery, state: FSMContext):
 
     next_q_index = current_q_index + 1
 
-    # Категория ішіндегі сұрақтар бітті ме?
     if next_q_index < len(questions):
         # Келесі сұрақ
         next_question = questions[next_q_index]
         await state.update_data(answers=answers, current_question=next_q_index)
 
+        cat_name = get_text(category_data, "name", lang)
+        q_text = get_text(next_question, "text", lang)
+
         await callback.message.edit_text(
-            f"{category_data['emoji']} <b>{category_data['name']}</b>\n\n"
-            f"📝 Сұрақ {next_q_index + 1}/{len(questions)}:\n\n"
-            f"❓ <b>{next_question['text']}</b>",
-            parse_mode="HTML",
-            reply_markup=get_question_keyboard(next_question, category_id),
+            f"{category_data['emoji']} <b>{cat_name}</b>\n\n"
+            f"{t('question_n', lang).format(n=next_q_index + 1, total=len(questions))}\n\n"
+            f"❓ <b>{q_text}</b>",
+            reply_markup=get_question_keyboard(next_question, category_id, lang),
         )
         await callback.answer()
     else:
@@ -144,26 +154,28 @@ async def process_answer(callback: CallbackQuery, state: FSMContext):
             )
             await state.set_state(CATEGORY_STATE_MAP[next_cat_id])
 
-            # Жаңа категория хабарламасы
+            # Прогресс
             completed = current_cat_index + 1
             total = len(CATEGORY_ORDER)
             progress_bar = "🟢" * completed + "⚪" * (total - completed)
 
+            cat_name_done = get_text(category_data, "name", lang)
+            next_name = get_text(next_category, "name", lang)
+            next_desc = get_text(next_category, "description", lang)
+
             await callback.message.edit_text(
-                f"✅ <b>{category_data['name']}</b> блогы аяқталды!\n\n"
+                f"{t('block_done', lang).format(name=cat_name_done)}\n\n"
                 f"Прогресс: {progress_bar} ({completed}/{total})\n\n"
-                f"Келесі блок: {next_category['emoji']} <b>{next_category['name']}</b>\n"
-                f"{next_category['description']}",
-                parse_mode="HTML",
+                f"{t('next_block', lang).format(emoji=next_category['emoji'], name=next_name, desc=next_desc)}",
             )
 
             # Бірінші сұрақ
             first_q = next_questions[0]
+            q_text = get_text(first_q, "text", lang)
             await callback.message.answer(
-                f"📝 Сұрақ 1/{len(next_questions)}:\n\n"
-                f"❓ <b>{first_q['text']}</b>",
-                parse_mode="HTML",
-                reply_markup=get_question_keyboard(first_q, next_cat_id),
+                f"{t('question_n', lang).format(n=1, total=len(next_questions))}\n\n"
+                f"❓ <b>{q_text}</b>",
+                reply_markup=get_question_keyboard(first_q, next_cat_id, lang),
             )
             await callback.answer()
         else:
@@ -175,9 +187,7 @@ async def process_answer(callback: CallbackQuery, state: FSMContext):
             done_bar = "🟢" * total_cats
             await callback.message.edit_text(
                 f"{done_bar} Прогресс: {total_cats}/{total_cats}\n\n"
-                "✅ <b>Барлық сұрақтар аяқталды!</b>\n\n"
-                "⏳ Жауаптарыңды талдап жатырмын...",
-                parse_mode="HTML",
+                f"{t('all_done', lang)}",
             )
 
             # Талдау жасау
@@ -185,17 +195,76 @@ async def process_answer(callback: CallbackQuery, state: FSMContext):
             tag_scores = calculate_tag_scores(all_tags)
             matched = match_professions(tag_scores, top_n=5)
 
-            # Нәтижені көрсету
-            result_text = format_result_message(matched)
-            await callback.message.answer(
-                result_text,
-                parse_mode="HTML",
-                reply_markup=get_restart_inline(webapp_url=WEBAPP_URL),
+            # Нәтижені форматтау
+            result_text = format_result_message(matched, lang=lang)
+
+            # DB-ға сақтау
+            top_profs = [
+                {"id": m["profession"]["id"],
+                 "name": m["profession"]["name"],
+                 "name_ru": m["profession"].get("name_ru", ""),
+                 "emoji": m["profession"]["emoji"],
+                 "score": m["score"]}
+                for m in matched
+            ]
+            result_id = await save_result(
+                user_id=callback.from_user.id,
+                first_name=callback.from_user.first_name or "👤",
+                top_professions=top_profs,
+                tag_scores=dict(tag_scores),
+                lang=lang,
             )
 
-            # Нәтижелерді state-те сақтау (кейін /results үшін)
+            # Бөлісу сілтемесі
+            bot_info = await callback.bot.get_me()
+            share_url = f"https://t.me/{bot_info.username}?start=r_{result_id}"
+
+            await callback.message.answer(
+                result_text,
+                reply_markup=get_restart_inline(
+                    lang=lang, webapp_url=WEBAPP_URL, share_url=share_url,
+                ),
+            )
+
+            # Карточка результатов (PNG)
+            from services.card_generator import generate_result_card
+            from aiogram.types import BufferedInputFile
+            card_buf = generate_result_card(
+                user_name=callback.from_user.first_name or "👤",
+                top_professions=matched,
+                lang=lang,
+                bot_username=bot_info.username,
+            )
+            await callback.message.answer_photo(
+                photo=BufferedInputFile(card_buf.read(), filename="result.png"),
+            )
+
+            # Мини-квесттер ұсыну
+            from handlers.quest import get_available_quest_ids
+            from keyboards.quest_kb import get_quest_selection_keyboard
+            quest_kb = get_quest_selection_keyboard(
+                matched, lang, available_ids=get_available_quest_ids(),
+            )
+            if quest_kb:
+                await callback.message.answer(
+                    t("quest_invite", lang),
+                    reply_markup=quest_kb,
+                )
+
+            # State-те сақтау (кейін /results үшін)
             await state.update_data(
                 last_results=result_text,
                 tag_scores=dict(tag_scores),
+                last_share_url=share_url,
+                last_top_professions=[
+                    {"id": m["profession"]["id"],
+                     "name": m["profession"]["name"],
+                     "name_ru": m["profession"].get("name_ru", ""),
+                     "emoji": m["profession"]["emoji"],
+                     "score": m["score"],
+                     "demand": m["profession"].get("demand", ""),
+                     "salary_range": m["profession"].get("salary_range", "")}
+                    for m in matched
+                ],
             )
-            await callback.answer("🎉 Нәтижеңіз дайын!")
+            await callback.answer(t("results_ready", lang))

@@ -25,3 +25,9 @@ class SurveyStates(StatesGroup):
     digital = State()
 
     results = State()
+
+
+class QuestStates(StatesGroup):
+    """Мини-квест кезеңдері."""
+
+    active = State()

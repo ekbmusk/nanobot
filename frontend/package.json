@@ -1,35 +1,30 @@
 {
-  "name": "physics-bot-frontend",
+  "name": "frontend",
   "private": true,
-  "version": "2.0.0",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "pages:dev": "wrangler pages dev dist --port 8788",
-    "pages:deploy": "wrangler pages deploy dist --project-name physics-bot-frontend"
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@twa-dev/sdk": "^7.10.0",
-    "axios": "^1.6.0",
-    "canvas-confetti": "^1.9.2",
-    "katex": "^0.16.9",
-    "lucide-react": "^0.363.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-katex": "^3.0.1",
-    "react-router-dom": "^6.20.0",
-    "zustand": "^4.4.7"
+    "axios": "^1.14.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "@vitejs/plugin-react": "^4.2.0",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.3.6",
-    "vite": "^5.0.0",
-    "wrangler": "^4.73.0"
+    "@eslint/js": "^9.39.4",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "tailwindcss": "^4.2.2",
+    "vite": "^8.0.4"
   }
 }

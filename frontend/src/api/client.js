@@ -1,27 +1,15 @@
-import axios from 'axios'
-import WebApp from '@twa-dev/sdk'
+import axios from 'axios';
 
-const client = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
-  timeout: 15000,
-  headers: { 'Content-Type': 'application/json' },
-})
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '',
+});
 
-// Attach Telegram initData to every request for auth
-client.interceptors.request.use((config) => {
-  const initData = WebApp.initData
-  if (initData) {
-    config.headers['X-Telegram-Init-Data'] = initData
-  }
-  return config
-})
+export const fetchQuestions = () => api.get('/api/questions').then(r => r.data);
+export const fetchProfessions = () => api.get('/api/professions').then(r => r.data);
+export const fetchUniversities = () => api.get('/api/universities').then(r => r.data);
 
-client.interceptors.response.use(
-  (response) => response.data,
-  (error) => {
-    const message = error?.response?.data?.detail || error.message || 'Желі қатесі'
-    return Promise.reject(new Error(message))
-  }
-)
+export const fetchQuests = () => api.get('/api/quests').then(r => r.data);
 
-export default client
+export const fetchCard =(userName, topProfessions, lang = 'kk') =>
+  api.post('/api/card', { user_name: userName, top_professions: topProfessions, lang }, { responseType: 'blob' })
+    .then(r => URL.createObjectURL(r.data));

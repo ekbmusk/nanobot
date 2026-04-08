@@ -1,51 +1,32 @@
-import { useEffect, useState } from 'react'
-import WebApp from '@twa-dev/sdk'
-
 export function useTelegram() {
-  const [user, setUser] = useState(null)
-  const [isReady, setIsReady] = useState(false)
+  // Lazy access — Telegram SDK может загрузиться позже модуля
+  const tg = window.Telegram?.WebApp;
+  const user = tg?.initDataUnsafe?.user;
 
-  useEffect(() => {
-    WebApp.ready()
-    WebApp.expand()
-    const tgUser = WebApp.initDataUnsafe?.user
-    if (tgUser) setUser(tgUser)
-    setIsReady(true)
-  }, [])
-
-  const haptic = {
-    light: () => WebApp.HapticFeedback.impactOccurred('light'),
-    medium: () => WebApp.HapticFeedback.impactOccurred('medium'),
-    heavy: () => WebApp.HapticFeedback.impactOccurred('heavy'),
-    success: () => WebApp.HapticFeedback.notificationOccurred('success'),
-    error: () => WebApp.HapticFeedback.notificationOccurred('error'),
-    warning: () => WebApp.HapticFeedback.notificationOccurred('warning'),
-  }
-
-  const showBackButton = (onBack) => {
-    WebApp.BackButton.show()
-    WebApp.BackButton.onClick(onBack)
-  }
-
-  const hideBackButton = () => {
-    WebApp.BackButton.hide()
-  }
-
-  const showAlert = (message) => WebApp.showAlert(message)
-  const showConfirm = (message, callback) => WebApp.showConfirm(message, callback)
-  const close = () => WebApp.close()
+  const sendData = (data) => {
+    const tg = window.Telegram?.WebApp;
+    const payload = JSON.stringify(data);
+    try {
+      if (tg?.sendData) {
+        tg.sendData(payload);
+      } else {
+        tg?.close?.();
+      }
+    } catch (e) {
+      console.error('sendData error:', e);
+      tg?.close?.();
+    }
+  };
 
   return {
+    tg,
     user,
-    isReady,
-    initData: WebApp.initData,
-    colorScheme: WebApp.colorScheme,
-    themeParams: WebApp.themeParams,
-    haptic,
-    showBackButton,
-    hideBackButton,
-    showAlert,
-    showConfirm,
-    close,
-  }
+    ready: () => window.Telegram?.WebApp?.ready(),
+    expand: () => window.Telegram?.WebApp?.expand(),
+    haptic: tg?.HapticFeedback,
+    backButton: tg?.BackButton,
+    sendData,
+    setHeaderColor: (c) => window.Telegram?.WebApp?.setHeaderColor?.(c),
+    setBackgroundColor: (c) => window.Telegram?.WebApp?.setBackgroundColor?.(c),
+  };
 }

@@ -9,6 +9,8 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
 from config import WEBAPP_URL
+from database import save_result, get_user_lang
+from i18n import t
 from services.analyzer import calculate_weighted_tag_scores
 from services.matcher import match_professions, format_result_message
 from services.anticheat import validate_answers, calculate_confidence, format_confidence
@@ -26,23 +28,27 @@ with open(QUESTIONS_PATH, "r", encoding="utf-8") as f:
 @router.message(F.web_app_data)
 async def handle_webapp_data(message: Message, state: FSMContext):
     """Mini App-тан келген тест нәтижелерін өңдеу."""
+    data_raw = await state.get_data()
+    lang = data_raw.get("lang")
+    if not lang:
+        lang = await get_user_lang(message.from_user.id) or "kk"
+
     try:
         data = json.loads(message.web_app_data.data)
     except (json.JSONDecodeError, AttributeError):
-        await message.answer("❌ Қате деректер. Қайта тест тапсырыңыз.")
+        await message.answer(t("webapp_error", lang))
         return
 
     answers = data.get("answers", [])
     timings_data = data.get("timings", [])
 
     if not answers:
-        await message.answer("❌ Тест толық аяқталмады. Қайта тест тапсырыңыз.")
+        await message.answer(t("webapp_incomplete", lang))
         return
 
-    logger.info(f"📊 Mini App нәтижесі: {len(answers)} жауап, user={message.from_user.id}")
+    logger.info(f"Mini App: {len(answers)} answers, user={message.from_user.id}")
 
-    # Server-side anti-cheat
-    # Тегтерді сервер жағында реконструкциялау (қауіпсіздік)
+    # Server-side: тегтерді реконструкциялау
     _reconstruct_tags(answers)
 
     anticheat_result = validate_answers(answers, timings_data)
@@ -54,16 +60,68 @@ async def handle_webapp_data(message: Message, state: FSMContext):
 
     # Нәтижені форматтау
     confidence_text = format_confidence(confidence)
-    result_text = format_result_message(matched)
+    result_text = format_result_message(matched, lang=lang)
     full_result = f"{confidence_text}\n\n{result_text}"
 
-    await message.answer(full_result, reply_markup=get_restart_inline(webapp_url=WEBAPP_URL))
+    # DB-ға сақтау
+    top_profs = [
+        {"id": m["profession"]["id"],
+         "name": m["profession"]["name"],
+         "name_ru": m["profession"].get("name_ru", ""),
+         "emoji": m["profession"]["emoji"],
+         "score": m["score"]}
+        for m in matched
+    ]
+    result_id = await save_result(
+        user_id=message.from_user.id,
+        first_name=message.from_user.first_name or "👤",
+        top_professions=top_profs,
+        tag_scores={k: float(v) for k, v in tag_scores.items()},
+        confidence=confidence,
+        lang=lang,
+    )
+
+    # Бөлісу сілтемесі
+    bot_info = await message.bot.get_me()
+    share_url = f"https://t.me/{bot_info.username}?start=r_{result_id}"
+
+    await message.answer(
+        full_result,
+        reply_markup=get_restart_inline(lang=lang, webapp_url=WEBAPP_URL, share_url=share_url),
+    )
+
+    # Карточка результатов (PNG)
+    from services.card_generator import generate_result_card
+    from aiogram.types import BufferedInputFile
+    card_buf = generate_result_card(
+        user_name=message.from_user.first_name or "👤",
+        top_professions=matched,
+        lang=lang,
+        bot_username=bot_info.username,
+    )
+    await message.answer_photo(
+        photo=BufferedInputFile(card_buf.read(), filename="result.png"),
+    )
+
+    # Мини-квесттер ұсыну
+    from handlers.quest import get_available_quest_ids
+    from keyboards.quest_kb import get_quest_selection_keyboard
+    quest_kb = get_quest_selection_keyboard(
+        matched, lang, available_ids=get_available_quest_ids(),
+    )
+    if quest_kb:
+        await message.answer(
+            t("quest_invite", lang),
+            reply_markup=quest_kb,
+        )
 
     # Cache for /results
     await state.update_data(
         last_results=full_result,
         tag_scores={k: float(v) for k, v in tag_scores.items()},
         confidence=confidence,
+        last_share_url=share_url,
+        lang=lang,
     )
 
 
