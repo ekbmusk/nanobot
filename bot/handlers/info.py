@@ -1,4 +1,4 @@
-"""Ақпараттық хендлерлер — авторлар, тіл ауыстыру."""
+"""Ақпараттық хендлерлер — бот туралы, көмек, авторлар, тіл."""
 
 from aiogram import Router, F
 from aiogram.filters import Command
@@ -11,6 +11,21 @@ from i18n import t
 from keyboards.main_kb import get_language_keyboard, get_main_keyboard
 
 router = Router()
+
+
+@router.message(Command("help"))
+@router.message(F.text.in_(["❓ Көмек", "❓ Помощь"]))
+async def cmd_help(message: Message, state: FSMContext):
+    """Көмек хабарламасын көрсету."""
+    lang = await _get_lang(message, state)
+    await message.answer(t("help", lang))
+
+
+@router.message(F.text.in_(["ℹ️ Бот туралы", "ℹ️ О боте"]))
+async def cmd_about(message: Message, state: FSMContext):
+    """Бот туралы ақпарат."""
+    lang = await _get_lang(message, state)
+    await message.answer(t("about", lang))
 
 
 @router.message(F.text.in_(["👩‍🎓 Авторлар", "👩‍🎓 Авторы"]))

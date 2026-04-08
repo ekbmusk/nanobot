@@ -25,18 +25,15 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
 
 def get_main_keyboard(lang: str = "kk", webapp_url: str = "") -> ReplyKeyboardMarkup:
     """Негізгі reply клавиатура."""
-    if webapp_url:
-        start_btn = KeyboardButton(
-            text=t("btn_start", lang),
-            web_app=WebAppInfo(url=f"{webapp_url}"),
-        )
-    else:
-        start_btn = KeyboardButton(text=t("btn_start", lang))
-
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
-            [start_btn],
-            [KeyboardButton(text=t("btn_authors", lang))],
+            [
+                KeyboardButton(text=t("btn_about", lang)),
+                KeyboardButton(text=t("btn_help", lang)),
+            ],
+            [
+                KeyboardButton(text=t("btn_authors", lang)),
+            ],
         ],
         resize_keyboard=True,
         input_field_placeholder="🎯",
@@ -59,7 +56,6 @@ def get_start_inline(lang: str = "kk", webapp_url: str = "") -> InlineKeyboardMa
 def get_restart_inline(lang: str = "kk", webapp_url: str = "",
                        share_url: str = "") -> InlineKeyboardMarkup:
     """Қайта тест + карточка + бөлісу батырмалары."""
-    card_text = "📸 Карточка"
     buttons = [
         [
             InlineKeyboardButton(
@@ -67,7 +63,7 @@ def get_restart_inline(lang: str = "kk", webapp_url: str = "",
                 callback_data="start_survey",
             ),
             InlineKeyboardButton(
-                text=card_text,
+                text="📸 Карточка",
                 callback_data="get_card",
             ),
         ],
